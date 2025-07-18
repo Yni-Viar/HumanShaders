@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cef34frwrotye"
+path.s3tc="res://.godot/imported/Emili_Head_Optimized_00_diffuse_unlit_unpainted_4k.png-2c562df2fef513625afb59d36d39b0b0.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "d70efa0dbfee4fd7fd0f11b91bc05b7a"
+}
+
+[deps]
+
+source_file="res://Models/HumanHead/EmilyHeadScan/Emili_Head_Optimized_00_diffuse_unlit_unpainted_4k.png"
+dest_files=["res://.godot/imported/Emili_Head_Optimized_00_diffuse_unlit_unpainted_4k.png-2c562df2fef513625afb59d36d39b0b0.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

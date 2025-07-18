@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://by2gftbg8mh52"]
+
+[ext_resource type="Shader" uid="uid://csvuff5c4qll4" path="res://Shaders/vshader_eye_wetness.tres" id="1_rhdrx"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rhdrx")
+shader_parameter/Roughness = 0.15
+shader_parameter/ShadowColor = Color(1, 0.846, 0.79, 1)
+shader_parameter/Shadow = 0.3

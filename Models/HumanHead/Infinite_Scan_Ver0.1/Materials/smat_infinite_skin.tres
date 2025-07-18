@@ -1,0 +1,58 @@
+[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://bok8104w80smq"]
+
+[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader_v2.gdshader" id="1_8yon7"]
+[ext_resource type="Texture2D" uid="uid://dfpv6v1xepmg0" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02_AO2_SmoothUV.png" id="2_ajqh4"]
+[ext_resource type="Gradient" uid="uid://bg5wg2pb2tpm7" path="res://Shaders/lightwarp_skin1.tres" id="3_6g15d"]
+[ext_resource type="Texture2D" uid="uid://dpa1a3ensid5" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Images/Map-COL.jpg" id="4_22rnj"]
+[ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Models/HumanHead/skin_micro_nrm_ao_2.png" id="5_tb4p2"]
+[ext_resource type="Texture2D" uid="uid://cf72xwb6rqlt" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02_NRM_AO_4k.png" id="6_wv05w"]
+[ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://Models/HumanHead/InterleavedGradientNoise.png" id="7_tmbak"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kuytg"]
+gradient = ExtResource("3_6g15d")
+use_hdr = true
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8yon7")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("4_22rnj")
+shader_parameter/roughness = 0.4
+shader_parameter/specular = 0.7
+shader_parameter/double_specularity = true
+shader_parameter/metallic = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/texture_normal = ExtResource("6_wv05w")
+shader_parameter/normal_strength = 1.0
+shader_parameter/micro_detail_scale = 60.0
+shader_parameter/micro_normal_strength = 0.2
+shader_parameter/micro_ao_strength = 0.2
+shader_parameter/texture_micro_detail = ExtResource("5_tb4p2")
+shader_parameter/ambient_occlusion_texture = ExtResource("2_ajqh4")
+shader_parameter/ao_strength = 0.3
+shader_parameter/ao_block_light = 0.3
+shader_parameter/subsurface_scattering = true
+shader_parameter/use_noise = true
+shader_parameter/subsurface_scattering_strength = 0.4
+shader_parameter/skin_smoothness = 4.0
+shader_parameter/skin_fallof_smoothness = 1.0
+shader_parameter/tinted_shadow_penumbra = false
+shader_parameter/old_lightwarp_fallof = false
+shader_parameter/lightwarp = SubResource("GradientTexture1D_kuytg")
+shader_parameter/texture_sss_noise = ExtResource("7_tmbak")
+shader_parameter/translucency = false
+shader_parameter/translucency_strength = 2.0
+shader_parameter/brow_down_L = 0.0
+shader_parameter/brow_down_R = 0.0
+shader_parameter/nose_sneer_L = 0.0
+shader_parameter/nose_sneer_R = 0.0
+shader_parameter/eye_squint_L = 0.0
+shader_parameter/eye_squint_R = 0.0
+shader_parameter/mouth_stretch_L = 0.0
+shader_parameter/mouth_stretch_R = 0.0
+shader_parameter/mouth_smile_L = 0.0
+shader_parameter/mouth_smile_R = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)

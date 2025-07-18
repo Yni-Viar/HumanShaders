@@ -1,0 +1,175 @@
+[gd_resource type="VisualShader" load_steps=19 format=3 uid="uid://5l83bd82wruu"]
+
+[ext_resource type="Texture2D" uid="uid://ca2ekxfrmiqux" path="res://Models/Eye/eye_iris_depth.png" id="1_btm6m"]
+[ext_resource type="Texture2D" uid="uid://djwp2efkqa8lh" path="res://Models/Eye/eye_veins_nrm.png" id="2_gucpt"]
+[ext_resource type="Texture2D" uid="uid://bnmk2b33qcoi7" path="res://Models/Eye/realistic_eye_eye_iris_diff.png" id="3_ho0rc"]
+[ext_resource type="Texture2D" uid="uid://bm8w4co7anpfe" path="res://Models/Eye/eye_sclera_diff_2.png" id="4_g4fni"]
+
+[sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_rwk3g"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(0, 0), 2, Vector2(1, 1)]
+op_type = 3
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_c8mk5"]
+parameter_name = "IrisScale"
+hint = 1
+max = 10.0
+default_value_enabled = true
+default_value = 3.5
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_b0v7t"]
+texture = ExtResource("1_btm6m")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_rqrdt"]
+texture = ExtResource("2_gucpt")
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_o2hhd"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0.5, 0.5, 1), 2, Vector3(0.5, 0.5, 0.5)]
+op_type = 3
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_mpqvg"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0.5, 0.5, 1), 2, Vector3(0.5, 0.5, 0.5)]
+op_type = 3
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_1n8sj"]
+constant = 0.75
+
+[sub_resource type="VisualShaderNodeIntConstant" id="VisualShaderNodeIntConstant_kfiya"]
+constant = 4
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_h5d1m"]
+parameter_name = "Roughness"
+hint = 1
+default_value_enabled = true
+default_value = 0.5
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_c40gf"]
+output_port_for_preview = 0
+expanded_output_ports = [0]
+texture = ExtResource("3_ho0rc")
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_b62v1"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_otrgo"]
+default_input_values = [1, Vector2(4, 4), 2, Vector2(0.57, 0.57)]
+function = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_vegvg"]
+texture = ExtResource("4_g4fni")
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_ch2l3"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1), 2, Vector3(0.5, 0.5, 0.5)]
+op_type = 3
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D tex_frg_8 : source_color;
+uniform float IrisScale : hint_range(0.0, 10.0) = 3.5;
+uniform sampler2D tex_frg_5 : source_color;
+uniform float Roughness : hint_range(0.0, 1.0) = 0.5;
+uniform sampler2D tex_frg_13 : source_color;
+
+
+
+void fragment() {
+// Texture2D:8
+	vec4 n_out8p0 = texture(tex_frg_8, UV);
+
+
+// Input:6
+	vec2 n_out6p0 = UV;
+
+
+// FloatParameter:11
+	float n_out11p0 = IrisScale;
+
+
+// UVFunc:7
+	vec2 n_in7p2 = vec2(0.57000, 0.57000);
+	vec2 n_out7p0 = (n_out6p0 - n_in7p2) * vec2(n_out11p0) + n_in7p2;
+
+
+// Clamp:10
+	vec2 n_in10p1 = vec2(0.00000, 0.00000);
+	vec2 n_in10p2 = vec2(1.00000, 1.00000);
+	vec2 n_out10p0 = clamp(n_out7p0, n_in10p1, n_in10p2);
+
+
+// Texture2D:5
+	vec4 n_out5p0 = texture(tex_frg_5, n_out10p0);
+	float n_out5p4 = n_out5p0.a;
+
+
+// Mix:9
+	vec3 n_out9p0 = mix(vec3(n_out8p0.xyz), vec3(n_out5p0.xyz), vec3(n_out5p4));
+
+
+// FloatParameter:4
+	float n_out4p0 = Roughness;
+
+
+// IntConstant:18
+	int n_out18p0 = 4;
+
+
+// Texture2D:13
+	vec4 n_out13p0 = textureLod(tex_frg_13, UV, float(n_out18p0));
+
+
+// Mix:15
+	vec3 n_in15p1 = vec3(0.50000, 0.50000, 1.00000);
+	vec3 n_out15p0 = mix(vec3(n_out13p0.xyz), n_in15p1, vec3(n_out5p4));
+
+
+// FloatConstant:17
+	float n_out17p0 = 0.750000;
+
+
+// Mix:16
+	vec3 n_in16p1 = vec3(0.50000, 0.50000, 1.00000);
+	vec3 n_out16p0 = mix(n_out15p0, n_in16p1, vec3(n_out17p0));
+
+
+// Output:0
+	ALBEDO = n_out9p0;
+	ROUGHNESS = n_out4p0;
+	NORMAL_MAP = n_out16p0;
+
+
+}
+"
+nodes/fragment/0/position = Vector2(580, 140)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatParameter_h5d1m")
+nodes/fragment/4/position = Vector2(80, 300)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_c40gf")
+nodes/fragment/5/position = Vector2(-460, 240)
+nodes/fragment/6/node = SubResource("VisualShaderNodeInput_b62v1")
+nodes/fragment/6/position = Vector2(-1340, 240)
+nodes/fragment/7/node = SubResource("VisualShaderNodeUVFunc_otrgo")
+nodes/fragment/7/position = Vector2(-1000, 280)
+nodes/fragment/8/node = SubResource("VisualShaderNodeTexture_vegvg")
+nodes/fragment/8/position = Vector2(-440, -20)
+nodes/fragment/9/node = SubResource("VisualShaderNodeMix_ch2l3")
+nodes/fragment/9/position = Vector2(-120, 180)
+nodes/fragment/10/node = SubResource("VisualShaderNodeClamp_rwk3g")
+nodes/fragment/10/position = Vector2(-720, 280)
+nodes/fragment/11/node = SubResource("VisualShaderNodeFloatParameter_c8mk5")
+nodes/fragment/11/position = Vector2(-1320, 360)
+nodes/fragment/12/node = SubResource("VisualShaderNodeTexture_b0v7t")
+nodes/fragment/12/position = Vector2(-120, 1000)
+nodes/fragment/13/node = SubResource("VisualShaderNodeTexture_rqrdt")
+nodes/fragment/13/position = Vector2(-480, 720)
+nodes/fragment/15/node = SubResource("VisualShaderNodeMix_o2hhd")
+nodes/fragment/15/position = Vector2(-100, 660)
+nodes/fragment/16/node = SubResource("VisualShaderNodeMix_mpqvg")
+nodes/fragment/16/position = Vector2(180, 660)
+nodes/fragment/17/node = SubResource("VisualShaderNodeFloatConstant_1n8sj")
+nodes/fragment/17/position = Vector2(-100, 860)
+nodes/fragment/18/node = SubResource("VisualShaderNodeIntConstant_kfiya")
+nodes/fragment/18/position = Vector2(-740, 860)
+nodes/fragment/connections = PackedInt32Array(4, 0, 0, 3, 6, 0, 7, 0, 8, 0, 9, 0, 5, 0, 9, 1, 9, 0, 0, 0, 7, 0, 10, 0, 10, 0, 5, 0, 11, 0, 7, 1, 13, 0, 15, 0, 5, 4, 15, 2, 15, 0, 16, 0, 17, 0, 16, 2, 5, 4, 9, 2, 16, 0, 0, 9, 18, 0, 13, 1)

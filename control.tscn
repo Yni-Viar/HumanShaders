@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://xwyd3r00f7je"]
+
+[ext_resource type="Script" uid="uid://dc8y888ii2jtu" path="res://show_value.gd" id="1_v5ory"]
+[ext_resource type="Script" uid="uid://btt4xnclnro7e" path="res://combine_values_test.gd" id="2_rlais"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 163.0
+offset_right = 463.0
+offset_bottom = 246.0
+
+[node name="HSlider2" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 246.0
+offset_right = 463.0
+offset_bottom = 329.0
+
+[node name="Label" type="Label" parent="." node_paths=PackedStringArray("slider")]
+layout_mode = 0
+offset_left = 503.0
+offset_top = 192.0
+offset_right = 567.0
+offset_bottom = 216.0
+text = "Slider 1"
+script = ExtResource("1_v5ory")
+slider = NodePath("../HSlider")
+
+[node name="Label2" type="Label" parent="." node_paths=PackedStringArray("slider")]
+layout_mode = 0
+offset_left = 503.0
+offset_top = 274.0
+offset_right = 567.0
+offset_bottom = 298.0
+text = "Slider 2
+"
+script = ExtResource("1_v5ory")
+slider = NodePath("../HSlider2")
+
+[node name="Label3" type="Label" parent="." node_paths=PackedStringArray("slider", "slider2")]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 121.0
+offset_right = 468.0
+offset_bottom = 145.0
+text = "Combined Values"
+script = ExtResource("2_rlais")
+slider = NodePath("../HSlider")
+slider2 = NodePath("../HSlider2")
