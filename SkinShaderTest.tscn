@@ -1,15 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://cx3ke36luq2sr"]
+[gd_scene load_steps=18 format=3 uid="uid://cx3ke36luq2sr"]
 
 [ext_resource type="ArrayMesh" uid="uid://dgaq4f263bcpf" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02.OBJ" id="1_ahks5"]
 [ext_resource type="Texture2D" uid="uid://bia04147fvbed" path="res://reading_room_4k.hdr" id="1_xhaxv"]
-[ext_resource type="Script" uid="uid://b40e0c3m2d0ks" path="res://auto_rotate.gd" id="2_jqh26"]
-[ext_resource type="Script" uid="uid://3fqhmlbfjxu8" path="res://head_visuas.gd" id="4_6cvmo"]
+[ext_resource type="Script" uid="uid://b40e0c3m2d0ks" path="res://Scripts/auto_rotate.gd" id="2_jqh26"]
+[ext_resource type="Script" uid="uid://3fqhmlbfjxu8" path="res://Scripts/head_visuas.gd" id="4_6cvmo"]
 [ext_resource type="PackedScene" uid="uid://c1to4ajlo0oyl" path="res://Models/HumanHead/EmilyHeadScan/Emili_Head_Optimized.glb" id="5_kre5v"]
-[ext_resource type="Script" uid="uid://douqcvauc0rtf" path="res://wrinkle_map_system.gd" id="7_ybsm3"]
+[ext_resource type="Script" uid="uid://douqcvauc0rtf" path="res://Scripts/wrinkle_map_system.gd" id="7_ybsm3"]
 [ext_resource type="Material" uid="uid://bok8104w80smq" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Materials/smat_infinite_skin.tres" id="8_fw5fm"]
-[ext_resource type="Script" uid="uid://c6e14a85jebsc" path="res://face_demo_camera.gd" id="11_0jrl4"]
-[ext_resource type="Script" uid="uid://boijn2aycwjpd" path="res://mini_debugger.gd" id="14_a2qj3"]
-[ext_resource type="Script" uid="uid://bwu05et5myu5m" path="res://lighting_setup.gd" id="14_yjmae"]
+[ext_resource type="Script" uid="uid://2rlq2dosu6m1" path="res://Scripts/ui_main.gd" id="10_wtu8x"]
+[ext_resource type="Script" uid="uid://c6e14a85jebsc" path="res://Scripts/face_demo_camera.gd" id="11_0jrl4"]
+[ext_resource type="Script" uid="uid://boijn2aycwjpd" path="res://Scripts/mini_debugger.gd" id="14_a2qj3"]
+[ext_resource type="Script" uid="uid://bwu05et5myu5m" path="res://Scripts/lighting_setup.gd" id="14_yjmae"]
 
 [sub_resource type="Gradient" id="Gradient_or4dy"]
 offsets = PackedFloat32Array(0, 0.402516, 0.789308, 1)
@@ -20,7 +21,6 @@ gradient = SubResource("Gradient_or4dy")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_hqxp2"]
 panorama = ExtResource("1_xhaxv")
-energy_multiplier = 0.1
 
 [sub_resource type="Sky" id="Sky_sa387"]
 sky_material = SubResource("PanoramaSkyMaterial_hqxp2")
@@ -28,6 +28,7 @@ sky_material = SubResource("PanoramaSkyMaterial_hqxp2")
 [sub_resource type="Environment" id="Environment_styh2"]
 background_mode = 2
 background_color = Color(0.654232, 0.654232, 0.654232, 1)
+background_energy_multiplier = 0.5
 sky = SubResource("Sky_sa387")
 sky_rotation = Vector3(0, 1.5708, 0)
 ambient_light_color = Color(0.544974, 0.544974, 0.544974, 1)
@@ -83,7 +84,7 @@ handle_input_locally = false
 use_debanding = true
 anisotropic_filtering_level = 4
 positional_shadow_atlas_size = 16384
-size = Vector2i(1920, 1080)
+size = Vector2i(1920, 1000)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
@@ -104,50 +105,113 @@ min_fov = 5.0
 script = ExtResource("2_jqh26")
 rotation_sensitivity = 0.1
 
-[node name="HeadVisuas" type="Node3D" parent="SubViewportContainer/SubViewport/Head"]
+[node name="HeadVisuals" type="Node3D" parent="SubViewportContainer/SubViewport/Head"]
 script = ExtResource("4_6cvmo")
 
-[node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuas" node_paths=PackedStringArray("mesh") instance=ExtResource("5_kre5v")]
+[node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" node_paths=PackedStringArray("mesh") instance=ExtResource("5_kre5v")]
 transform = Transform3D(0.0119473, 0.000345611, 0.00106945, -0.000346993, 0.011995, 2.4025e-11, -0.001069, -3.09241e-05, 0.0119523, -0.00207924, 0.122231, 0.0265137)
 script = ExtResource("7_ybsm3")
 mesh = NodePath("Armature/Skeleton3D/Emily_Head")
 
-[node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuas/Emili_Head_Optimized/Armature" index="0"]
-bones/3/rotation = Quaternion(-0.0857344, 0.000952728, -0.0027906, 0.996314)
-bones/4/rotation = Quaternion(0.690811, 0.0209462, 0.0130916, 0.722613)
-bones/5/rotation = Quaternion(0.676324, 0.0335968, -0.0837573, 0.731055)
+[node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature" index="0"]
+bones/3/rotation = Quaternion(-0.10074324, 0.021815777, -0.022852018, 0.9944108)
+bones/4/rotation = Quaternion(0.68221354, 0.0017951626, 0.031345163, 0.73047864)
+bones/5/rotation = Quaternion(0.6678315, 0.015999787, -0.065070465, 0.74129003)
 
-[node name="Emily_Face_Details" parent="SubViewportContainer/SubViewport/Head/HeadVisuas/Emili_Head_Optimized/Armature/Skeleton3D" index="0"]
+[node name="Emily_Face_Details" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="0"]
 extra_cull_margin = 50.0
-blend_shapes/browDownLeft = 0.000211886
-blend_shapes/browDownRight = 0.000211886
-blend_shapes/eyeLookInRight = 0.156952
-blend_shapes/eyeLookOutLeft = 0.156943
-blend_shapes/eyeLookUpLeft = 0.234676
-blend_shapes/eyeLookUpRight = 0.234688
-blend_shapes/jawLeft = 0.0182279
-blend_shapes/mouthFrownRight = 0.00850218
-blend_shapes/mouthRollLower = 0.000108376
+blend_shapes/browDownLeft = 0.00084724015
+blend_shapes/browDownRight = 0.00084724015
+blend_shapes/browInnerUp = 5.8021513e-05
+blend_shapes/browOuterUpLeft = 0.0007587681
+blend_shapes/browOuterUpRight = 0.010067191
+blend_shapes/cheekSquintLeft = 3.0666983e-05
+blend_shapes/eyeLookInRight = 4.639574e-05
+blend_shapes/eyeLookOutLeft = 4.9670212e-05
+blend_shapes/eyeLookUpLeft = 0.31180653
+blend_shapes/eyeLookUpRight = 0.31180635
+blend_shapes/eyeSquintLeft = 1.1257389e-05
+blend_shapes/eyeSquintRight = 1.1087937e-05
+blend_shapes/eyeWideLeft = 0.00052937097
+blend_shapes/eyeWideRight = 0.00067718484
+blend_shapes/jawForward = 0.035424378
+blend_shapes/jawLeft = 0.0010573645
+blend_shapes/jawOpen = 0.0002534425
+blend_shapes/jawRight = 0.00024457526
+blend_shapes/mouthClose = 3.7641505e-05
+blend_shapes/mouthDimpleLeft = 0.0012553683
+blend_shapes/mouthDimpleRight = 0.0009774218
+blend_shapes/mouthFrownLeft = 0.00017998577
+blend_shapes/mouthFrownRight = 0.0017217181
+blend_shapes/mouthFunnel = 1.7867162e-05
+blend_shapes/mouthLeft = 0.031752706
+blend_shapes/mouthLowerDownLeft = 0.0007015669
+blend_shapes/mouthPressLeft = 0.0006474424
+blend_shapes/mouthPressRight = 0.0007371665
+blend_shapes/mouthPucker = 2.0866068e-05
+blend_shapes/mouthRight = 0.0012230553
+blend_shapes/mouthRollLower = 0.06908672
+blend_shapes/mouthRollUpper = 0.0005015636
+blend_shapes/mouthShrugLower = 0.00023813918
+blend_shapes/mouthShrugUpper = 0.00051717047
+blend_shapes/mouthSmileLeft = 0.0008178979
+blend_shapes/mouthSmileRight = 0.0008700147
+blend_shapes/mouthStretchLeft = 0.007942034
+blend_shapes/mouthStretchRight = 0.019686619
+blend_shapes/mouthUpperUpLeft = 0.00025136909
+blend_shapes/mouthUpperUpRight = 0.00052228116
+blend_shapes/noseSneerLeft = 7.2388546e-05
 
-[node name="Emily_Head" parent="SubViewportContainer/SubViewport/Head/HeadVisuas/Emili_Head_Optimized/Armature/Skeleton3D" index="1"]
-blend_shapes/browDownLeft = 0.000211886
-blend_shapes/browDownRight = 0.000211886
-blend_shapes/eyeLookInRight = 0.156952
-blend_shapes/eyeLookOutLeft = 0.156943
-blend_shapes/eyeLookUpLeft = 0.234676
-blend_shapes/eyeLookUpRight = 0.234688
-blend_shapes/jawLeft = 0.0182279
-blend_shapes/mouthFrownRight = 0.00850218
-blend_shapes/mouthRollLower = 0.000108376
+[node name="Emily_Head" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="1"]
+blend_shapes/browDownLeft = 0.00084724015
+blend_shapes/browDownRight = 0.00084724015
+blend_shapes/browInnerUp = 5.8021513e-05
+blend_shapes/browOuterUpLeft = 0.0007587681
+blend_shapes/browOuterUpRight = 0.010067191
+blend_shapes/cheekSquintLeft = 3.0666983e-05
+blend_shapes/eyeLookInRight = 4.639574e-05
+blend_shapes/eyeLookOutLeft = 4.9670212e-05
+blend_shapes/eyeLookUpLeft = 0.31180653
+blend_shapes/eyeLookUpRight = 0.31180635
+blend_shapes/eyeSquintLeft = 1.1257389e-05
+blend_shapes/eyeSquintRight = 1.1087937e-05
+blend_shapes/eyeWideLeft = 0.00052937097
+blend_shapes/eyeWideRight = 0.00067718484
+blend_shapes/jawForward = 0.035424378
+blend_shapes/jawLeft = 0.0010573645
+blend_shapes/jawOpen = 0.0002534425
+blend_shapes/jawRight = 0.00024457526
+blend_shapes/mouthClose = 3.7641505e-05
+blend_shapes/mouthDimpleLeft = 0.0012553683
+blend_shapes/mouthDimpleRight = 0.0009774218
+blend_shapes/mouthFrownLeft = 0.00017998577
+blend_shapes/mouthFrownRight = 0.0017217181
+blend_shapes/mouthFunnel = 1.7867162e-05
+blend_shapes/mouthLeft = 0.031752706
+blend_shapes/mouthLowerDownLeft = 0.0007015669
+blend_shapes/mouthPressLeft = 0.0006474424
+blend_shapes/mouthPressRight = 0.0007371665
+blend_shapes/mouthPucker = 2.0866068e-05
+blend_shapes/mouthRight = 0.0012230553
+blend_shapes/mouthRollLower = 0.06908672
+blend_shapes/mouthRollUpper = 0.0005015636
+blend_shapes/mouthShrugLower = 0.00023813918
+blend_shapes/mouthShrugUpper = 0.00051717047
+blend_shapes/mouthSmileLeft = 0.0008178979
+blend_shapes/mouthSmileRight = 0.0008700147
+blend_shapes/mouthStretchLeft = 0.007942034
+blend_shapes/mouthStretchRight = 0.019686619
+blend_shapes/mouthUpperUpLeft = 0.00025136909
+blend_shapes/mouthUpperUpRight = 0.00052228116
+blend_shapes/noseSneerLeft = 7.2388546e-05
 
-[node name="Eye - Realistic_002" parent="SubViewportContainer/SubViewport/Head/HeadVisuas/Emili_Head_Optimized/Armature/Skeleton3D" index="2"]
+[node name="Eye - Realistic_002" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="2"]
 cast_shadow = 0
 
-[node name="AnimationPlayer" parent="SubViewportContainer/SubViewport/Head/HeadVisuas/Emili_Head_Optimized" index="1"]
-active = false
+[node name="AnimationPlayer" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized" index="1"]
 autoplay = "ArmatureAction_002"
 
-[node name="Infinite-level02" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuas"]
+[node name="Infinite-level02" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuals"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0.0632671)
 visible = false
 mesh = ExtResource("1_ahks5")
@@ -160,21 +224,25 @@ use_right_click = true
 rotation_sensitivity = 0.2
 
 [node name="LightingSetup1" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
-visible = false
 script = ExtResource("14_yjmae")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
 transform = Transform3D(0.504799, -0.513473, 0.693919, 2.32283e-09, 0.803857, 0.594823, -0.863237, -0.300266, 0.405786, 0, 0, 0)
 light_energy = 2.0
+light_specular = 2.0
 shadow_enabled = true
 shadow_bias = 0.001
-shadow_blur = 2.0
+shadow_blur = 4.0
+directional_shadow_split_1 = 0.0
+directional_shadow_split_2 = 0.3
+directional_shadow_split_3 = 0.6
 directional_shadow_max_distance = 1.0
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
 transform = Transform3D(0.1554, -0.905919, -0.393905, 7.61903e-09, -0.398749, 0.91706, -0.987852, -0.142511, -0.0619656, 0, 0, 0)
 light_color = Color(0.587668, 0.686282, 0.761403, 1)
 light_energy = 0.5
+light_specular = 0.0
 shadow_enabled = true
 shadow_bias = 0.001
 shadow_blur = 10.0
@@ -184,6 +252,7 @@ directional_shadow_max_distance = 4.0
 transform = Transform3D(0.933205, 0.337674, 0.122903, -5.17512e-09, 0.34202, -0.939693, -0.359346, 0.876925, 0.319175, 0, 0, 0)
 light_color = Color(0.84982, 0.611376, 0.445335, 1)
 light_energy = 0.4
+light_specular = 0.0
 shadow_enabled = true
 shadow_bias = 0.001
 shadow_blur = 10.0
@@ -191,6 +260,7 @@ directional_shadow_max_distance = 4.0
 
 [node name="LightingSetup2" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0632671)
+visible = false
 script = ExtResource("14_yjmae")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
@@ -265,14 +335,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("10_wtu8x")
 
 [node name="Panel" type="Panel" parent="UI"]
 self_modulate = Color(0, 0, 0, 0.745098)
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.167
+anchor_right = 0.18
 anchor_bottom = 1.0
-offset_right = -0.640015
+offset_right = -0.6000061
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -288,83 +359,87 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="ResetModel" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ResetModel" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Reset Model Rotation"
 
-[node name="ResetCamera" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="ResetCamera" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Reset Camera"
 
-[node name="ResetLights" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="ResetLights" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Reset Lighting Setup"
 
-[node name="HSeparator" type="HSeparator" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="LightingSetupText" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="LightingSetupText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Lighting Setup
 
 "
 horizontal_alignment = 1
 
-[node name="LightingSetupButtons" type="HFlowContainer" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="LightingSetupButtons" type="HFlowContainer" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="1" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer/LightingSetupButtons"]
+[node name="1" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/LightingSetupButtons"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "1"
 
-[node name="2" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer/LightingSetupButtons"]
+[node name="2" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/LightingSetupButtons"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "2"
 
-[node name="3" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer/LightingSetupButtons"]
+[node name="3" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/LightingSetupButtons"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "3"
 
-[node name="4" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer/LightingSetupButtons"]
+[node name="4" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/LightingSetupButtons"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "4"
 
-[node name="CastShadows" type="CheckButton" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="CastShadows" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 button_pressed = true
 text = "Cast Shadows"
 
-[node name="HSeparator2" type="HSeparator" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="MaterialText" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="MaterialText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Material
 
 "
 horizontal_alignment = 1
 
-[node name="SkinColor" type="Button" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="SkinColor" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 toggle_mode = true
 text = "Skin Color"
 
-[node name="SkinColorPicker" type="ColorPicker" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="SkinColorPicker" type="ColorPicker" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -374,43 +449,43 @@ color_modes_visible = false
 sliders_visible = false
 presets_visible = false
 
-[node name="Spacing" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Spacing" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 5
 text = "
 "
 horizontal_alignment = 1
 
-[node name="Roughness" type="HBoxContainer" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Roughness" type="HBoxContainer" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="RoughnessText" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer/Roughness"]
+[node name="RoughnessText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/Roughness"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Roughness
 "
 
-[node name="RoughnessSlider" type="HSlider" parent="UI/Panel/MarginContainer/VBoxContainer/Roughness"]
+[node name="RoughnessSlider" type="HSlider" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/Roughness"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.05
 
-[node name="Spacing2" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Spacing2" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 5
 text = "
 "
 horizontal_alignment = 1
 
-[node name="SubsurfaceScattering" type="CheckButton" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="SubsurfaceScattering" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 button_pressed = true
 text = "Subsurface Scattering"
 
-[node name="SSSNoise" type="CheckButton" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="SSSNoise" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "If true, the subsurface Scattering strength will be multiplied by an interleaved gradient noise,
@@ -418,37 +493,37 @@ hiding the visible \"layers\" of the effect without looking too noisy."
 button_pressed = true
 text = "Use IG Noise"
 
-[node name="Spacing3" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Spacing3" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 5
 text = "
 "
 horizontal_alignment = 1
 
-[node name="SubSurf" type="HBoxContainer" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="SubSurf" type="HBoxContainer" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "Subsurface Scattering Strength"
 
-[node name="SubSurfText" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer/SubSurf"]
+[node name="SubSurfText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SubSurf"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "SSS Strength"
 
-[node name="SubSurfSlider" type="HSlider" parent="UI/Panel/MarginContainer/VBoxContainer/SubSurf"]
+[node name="SubSurfSlider" type="HSlider" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SubSurf"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 2.0
 step = 0.05
 
-[node name="Spacing4" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Spacing4" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 5
 text = "
 "
 horizontal_alignment = 1
 
-[node name="TintedShadow" type="CheckButton" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="TintedShadow" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "If true, add a slight reddish tint to the shadow penumbra.
@@ -459,14 +534,14 @@ can also serve as a more lightweigh alternative to screen-space
 subsurface scattering."
 text = "Tinted Shadow Penumbra"
 
-[node name="Spacing5" type="Label" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Spacing5" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 5
 text = "
 "
 horizontal_alignment = 1
 
-[node name="Lightwarp" type="CheckButton" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Lightwarp" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "If true, use the old Valve's Lightwarp inspired
@@ -477,7 +552,7 @@ skin translucency by using the same normal map
 at different mipmap levels for each color channel."
 text = "Lightwarp Fallof (Deprecated)"
 
-[node name="Translucency" type="CheckButton" parent="UI/Panel/MarginContainer/VBoxContainer"]
+[node name="Translucency" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "If true, uses a fake translucency effect.
@@ -489,23 +564,26 @@ a problem where the object seems to be
 glowing in the dark, so it has to be used carefully."
 text = "Translucency"
 
-[node name="MiniDebuggerPanel" type="Panel" parent="UI"]
-self_modulate = Color(0, 0, 0, 0.392157)
-custom_minimum_size = Vector2(0, 77.76)
+[node name="Control" type="Control" parent="UI"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.175
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -3.05176e-05
-offset_top = -78.0
-offset_right = -16.0
+offset_left = 363.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MiniDebuggerPanel"]
+[node name="MiniDebuggerPanel" type="Panel" parent="UI/Control"]
+self_modulate = Color(0, 0, 0, 0.392157)
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/MiniDebuggerPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -517,7 +595,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MiniDebuggerPanel/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Control/MiniDebuggerPanel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/normal_font_size = 12
@@ -525,12 +603,61 @@ bbcode_enabled = true
 text = "Mini Debugger"
 script = ExtResource("14_a2qj3")
 
-[connection signal="pressed" from="UI/Panel/MarginContainer/VBoxContainer/ResetModel" to="SubViewportContainer/SubViewport/Head/HeadVisuas" method="_on_reset_model_pressed"]
-[connection signal="pressed" from="UI/Panel/MarginContainer/VBoxContainer/ResetCamera" to="SubViewportContainer/SubViewport/Node3D/Camera3D" method="_on_reset_camera_pressed"]
-[connection signal="pressed" from="UI/Panel/MarginContainer/VBoxContainer/ResetLights" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_reset_lights_pressed"]
-[connection signal="toggled" from="UI/Panel/MarginContainer/VBoxContainer/CastShadows" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_cast_shadows_toggled"]
-[connection signal="toggled" from="UI/Panel/MarginContainer/VBoxContainer/SkinColor" to="SubViewportContainer/SubViewport/Head/HeadVisuas" method="_on_skin_color_toggled"]
-[connection signal="color_changed" from="UI/Panel/MarginContainer/VBoxContainer/SkinColorPicker" to="SubViewportContainer/SubViewport/Head/HeadVisuas" method="_on_skin_color_picker_color_changed"]
-[connection signal="toggled" from="UI/Panel/MarginContainer/VBoxContainer/SubsurfaceScattering" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_cast_shadows_toggled"]
+[node name="AnimationPlayer" type="Panel" parent="UI/Control"]
+self_modulate = Color(0, 0, 0, 0.392157)
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 205.0
+offset_top = -60.0
+offset_right = -205.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(3.0517578e-05, 40)
+mouse_filter = 2
 
-[editable path="SubViewportContainer/SubViewport/Head/HeadVisuas/Emili_Head_Optimized"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/AnimationPlayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/AnimationPlayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="UI/Control/AnimationPlayer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Play"
+
+[node name="AnimationSlider" type="HSlider" parent="UI/Control/AnimationPlayer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1024, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.0010000000038417
+
+[connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetModel" to="SubViewportContainer/SubViewport/Head/HeadVisuals" method="_on_reset_model_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetCamera" to="SubViewportContainer/SubViewport/Node3D/Camera3D" method="_on_reset_camera_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetLights" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_reset_lights_pressed"]
+[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/CastShadows" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_cast_shadows_toggled"]
+[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SkinColor" to="SubViewportContainer/SubViewport/Head/HeadVisuals" method="_on_skin_color_toggled"]
+[connection signal="color_changed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SkinColorPicker" to="SubViewportContainer/SubViewport/Head/HeadVisuals" method="_on_skin_color_picker_color_changed"]
+[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SubsurfaceScattering" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_cast_shadows_toggled"]
+
+[editable path="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized"]

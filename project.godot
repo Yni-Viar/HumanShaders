@@ -12,18 +12,27 @@ config_version=5
 
 config/name="Human Shaders (Public)"
 run/main_scene="res://SkinShaderTest.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Autoload="*res://autoload.gd"
+Autoload="*res://Scripts/autoload.gd"
 
 [display]
 
 window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_height=1000
 window/size/borderless=true
+
+[file_customization]
+
+folder_colors={
+"res://Models/": "red",
+"res://Models/HumanHead/": "orange",
+"res://Scripts/": "green",
+"res://Shaders/": "blue"
+}
 
 [gui]
 

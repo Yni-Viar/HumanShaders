@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://xwyd3r00f7je"]
 
-[ext_resource type="Script" uid="uid://dc8y888ii2jtu" path="res://show_value.gd" id="1_v5ory"]
-[ext_resource type="Script" uid="uid://btt4xnclnro7e" path="res://combine_values_test.gd" id="2_rlais"]
+[ext_resource type="Script" uid="uid://dc8y888ii2jtu" path="res://Scripts/show_value.gd" id="1_v5ory"]
+[ext_resource type="Script" uid="uid://btt4xnclnro7e" path="res://Scripts/combine_values_test.gd" id="2_rlais"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bph24dlvf8y3t"]
+[gd_scene load_steps=9 format=3 uid="uid://bph24dlvf8y3t"]
 
 [ext_resource type="PackedScene" uid="uid://mvxt3ycdaera" path="res://Models/Eye/realistic_eye.glb" id="1_ka5bq"]
 [ext_resource type="Shader" uid="uid://2k5w43ebmdbe" path="res://Shaders/eye_shader_2.gdshader" id="2_50seh"]
-[ext_resource type="Texture2D" uid="uid://bnmk2b33qcoi7" path="res://Models/Eye/realistic_eye_eye_iris_diff.png" id="3_ayblk"]
 [ext_resource type="Texture2D" uid="uid://bq54fmu5xgksk" path="res://Models/Eye/eye_iris_diff.png" id="3_btb5o"]
 [ext_resource type="Texture2D" uid="uid://bcfgtc350v4n6" path="res://Models/Eye/eye_iris_nrm.png" id="4_b431s"]
-[ext_resource type="Texture2D" uid="uid://bm8w4co7anpfe" path="res://Models/Eye/eye_sclera_diff_2.png" id="4_gukfx"]
+[ext_resource type="Texture2D" uid="uid://bm8w4co7anpfe" path="res://Models/Eye/eye_sclera_diff.png" id="4_gukfx"]
 [ext_resource type="Texture2D" uid="uid://0gyhyfjxoap5" path="res://Models/Eye/eye_iris_parallax.png" id="5_73mwi"]
 [ext_resource type="Texture2D" uid="uid://cfttb0ix0yoes" path="res://Models/Eye/eye_sclera_nrm.png" id="6_d17pp"]
 
@@ -36,187 +35,6 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
-[sub_resource type="Shader" id="Shader_bweib"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
-
-shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
-
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform float point_size : hint_range(0.1, 128.0, 0.1);
-
-uniform float roughness : hint_range(0.0, 1.0);
-uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
-
-uniform float specular : hint_range(0.0, 1.0, 0.01);
-uniform float metallic : hint_range(0.0, 1.0, 0.01);
-
-uniform sampler2D texture_heightmap : hint_default_black, filter_linear_mipmap, repeat_enable;
-uniform float heightmap_scale : hint_range(-128.0, 128.0, 0.001);
-uniform int heightmap_min_layers : hint_range(1, 64);
-uniform int heightmap_max_layers : hint_range(1, 64);
-uniform vec2 heightmap_flip;
-
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-void vertex() {
-	UV = UV * uv1_scale.xy + uv1_offset.xy;
-}
-
-void fragment() {
-	vec2 base_uv = UV;
-
-	{
-		// Height: Enabled
-		vec3 view_dir = normalize(normalize(-VERTEX + EYE_OFFSET) * mat3(TANGENT * heightmap_flip.x, -BINORMAL * heightmap_flip.y, NORMAL));
-
-		// Height Deep Parallax: Enabled
-		float num_layers = mix(float(heightmap_max_layers), float(heightmap_min_layers), abs(dot(vec3(0.0, 0.0, 1.0), view_dir)));
-		float layer_depth = 1.0 / num_layers;
-		float current_layer_depth = 0.0;
-		vec2 p = view_dir.xy * heightmap_scale * 0.01;
-		vec2 delta = p / num_layers;
-		vec2 ofs = base_uv;
-		float depth = 1.0 - texture(texture_heightmap, ofs).r;
-
-		float current_depth = 0.0;
-		while (current_depth < depth) {
-			ofs -= delta;
-			depth = 1.0 - texture(texture_heightmap, ofs).r;
-
-			current_depth += layer_depth;
-		}
-
-		vec2 prev_ofs = ofs + delta;
-		float after_depth = depth - current_depth;
-		float before_depth = (1.0 - texture(texture_heightmap, prev_ofs).r) - current_depth + layer_depth;
-
-		float weight = after_depth / (after_depth - before_depth);
-		ofs = mix(ofs, prev_ofs, weight);
-		base_uv = ofs;
-	}
-
-	vec4 albedo_tex = texture(texture_albedo, base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-
-	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	SPECULAR = specular;
-
-	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
-	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
-}
-
-float DistributionGGX(float cos_theta_m, float alpha){
-	float alpha2 = alpha * alpha;
-	float d = 1.0 + (alpha2 - 1.0) * cos_theta_m * cos_theta_m;
-	return alpha2 / (PI * d * d);
-}
-
-float GeometryGGX(float NdotL, float NdotV, float alpha){
-	return 0.5 / mix(2.0 * NdotL * NdotV, NdotL + NdotV, alpha);
-}
-
-vec3 SchlickBaseReflectivity(){
-	float dielectric = 0.04 * specular * specular;
-	return mix(vec3(dielectric), albedo.rgb, vec3(metallic));
-}
-
-float SchlickFresnel(float u){
-	float m = 1.0 - u;
-	float m2 = m * m;
-	return m2 * m2 * m;
-}
-
-void light()
-{
-	// Calculate some vectors.
-	vec3 lightColor = LIGHT_COLOR / PI;
-
-	vec3 half = normalize(VIEW + LIGHT);
-
-	float NdotL = max(dot(NORMAL, LIGHT), 0.0);
-	float NdotV = max(dot(NORMAL, VIEW), 0.0);
-	float NdotH = max(dot(NORMAL, half), 0.0);
-	float LdotH = max(dot(LIGHT, half), 0.0);
-
-	// Diffuse light (Lambert).
-
-	DIFFUSE_LIGHT += clamp(dot(mix(NORMAL, NORMAL, 0.3), LIGHT),0.,1.) * ATTENUATION * lightColor;
-
-	//Custom Diffuse Light.
-
-	// Specular light (Schlick-GGX).
-	float ggxAlpha = ROUGHNESS * ROUGHNESS;
-	float D = DistributionGGX(NdotH, ggxAlpha);
-	float G = GeometryGGX(NdotL, NdotV, ggxAlpha);
-
-	vec3 f0 = SchlickBaseReflectivity();
-	float LdotH5 = SchlickFresnel(LdotH);
-	float f90 = clamp(50.0 * f0.g, 0.0, 1.0);
-	vec3 F = f0 + (f90 - f0) * LdotH5;
-
-	vec3 specularBRDF = max(NdotL * D * G * F, 0.0);
-	SPECULAR_LIGHT += specularBRDF * LIGHT_COLOR * ATTENUATION;
-}
-"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dnkx3"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qgqff"]
-render_priority = 0
-shader = SubResource("Shader_bweib")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = ExtResource("3_ayblk")
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 0.1
-shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/texture_heightmap = SubResource("CompressedTexture2D_dnkx3")
-shader_parameter/heightmap_scale = 51.625
-shader_parameter/heightmap_min_layers = 4
-shader_parameter/heightmap_max_layers = 8
-shader_parameter/heightmap_flip = Vector2(1, 1)
-shader_parameter/uv1_scale = Vector3(4, 4, 4)
-shader_parameter/uv1_offset = Vector3(0.5, 0.5, 0.5)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_u2yn4"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6662i"]
-render_priority = 0
-shader = ExtResource("2_50seh")
-shader_parameter/sclera_albedo = Color(1, 1, 1, 1)
-shader_parameter/iris_albedo = Color(1, 1, 1, 1)
-shader_parameter/sclera_albedo_texture = ExtResource("4_gukfx")
-shader_parameter/iris_albedo_texture = ExtResource("3_ayblk")
-shader_parameter/normal_strength = 1.0
-shader_parameter/iris_scale = 3.5
-shader_parameter/roughness = 0.1
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/texture_heightmap = ExtResource("5_73mwi")
-shader_parameter/heightmap_scale = 40.0
-shader_parameter/heightmap_min_layers = 1
-shader_parameter/heightmap_max_layers = 1
-shader_parameter/heightmap_flip = Vector2(1, 1)
-shader_parameter/subsurface_scattering = true
-shader_parameter/use_noise = false
-shader_parameter/subsurface_scattering_strength = 0.4
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-
 [node name="Node3D" type="Node3D"]
 
 [node name="realistic_eye" parent="." instance=ExtResource("1_ka5bq")]
@@ -226,20 +44,4 @@ transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 0)
 cast_shadow = 0
 surface_material_override/0 = SubResource("ShaderMaterial_foaae")
 
-[node name="realistic_eye2" parent="." instance=ExtResource("1_ka5bq")]
-transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -0.952039, 0, 0)
-visible = false
-
-[node name="Eye - Realistic_001" parent="realistic_eye2" index="0"]
-cast_shadow = 0
-surface_material_override/0 = SubResource("ShaderMaterial_qgqff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45439, 0, 0)
-visible = false
-cast_shadow = 0
-mesh = SubResource("PlaneMesh_u2yn4")
-surface_material_override/0 = SubResource("ShaderMaterial_6662i")
-
 [editable path="realistic_eye"]
-[editable path="realistic_eye2"]

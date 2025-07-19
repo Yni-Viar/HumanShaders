@@ -52,7 +52,7 @@ operator = 2
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 uniform float Roughness : hint_range(0.0, 1.0) = 0.20000000298023;
 uniform sampler2D screen_tex_frg_3 : hint_screen_texture;

@@ -13,7 +13,7 @@ uniform float normal_strength : hint_range(-16.0, 16.0) = 1.;
 
 uniform float iris_scale : hint_range(0.0, 10.0, 0.1) = 3.5;
 
-uniform float roughness : hint_range(0.0, 1.0, 0.1) = 0.1;
+uniform float roughness : hint_range(0.0, 1.0, 0.01) = 0.1;
 uniform float specular : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform float metallic : hint_range(0.0, 1.0, 0.01);
 
@@ -152,7 +152,7 @@ void light()
 	//Custom Diffuse Light.
 
 	// Specular light (Schlick-GGX).
-	float ggxAlpha = ROUGHNESS * ROUGHNESS;
+	float ggxAlpha = clamp(ROUGHNESS * ROUGHNESS, 0.01, 1.0);//clamping to avoid weird behavior at 0 roughness
 	float D = DistributionGGX(NdotH, ggxAlpha);
 	float G = GeometryGGX(NdotL, NdotV, ggxAlpha);
 

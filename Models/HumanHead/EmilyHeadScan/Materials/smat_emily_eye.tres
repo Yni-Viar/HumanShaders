@@ -6,12 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://bbxwfr7v0pw6s" path="res://Models/HumanHead/EmilyHeadScan/Emili_Head_Optimized_eye_sclera_diff_2.png" id="4_1aodd"]
 [ext_resource type="Texture2D" uid="uid://cfttb0ix0yoes" path="res://Models/Eye/eye_sclera_nrm.png" id="5_jvxbi"]
 [ext_resource type="Texture2D" uid="uid://0gyhyfjxoap5" path="res://Models/Eye/eye_iris_parallax.png" id="6_6li8n"]
-[ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://Models/HumanHead/InterleavedGradientNoise.png" id="6_83834"]
+[ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://Resources/InterleavedGradientNoise.png" id="6_83834"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_3rm1j")
-shader_parameter/sclera_albedo = Color(0.882, 0.8918, 0.98, 1)
+shader_parameter/sclera_albedo = Color(0.88235295, 0.8901961, 0.98039216, 1)
 shader_parameter/iris_albedo = Color(1, 1, 1, 1)
 shader_parameter/sclera_albedo_texture = ExtResource("4_1aodd")
 shader_parameter/iris_albedo_texture = ExtResource("2_l8oln")
@@ -19,13 +19,13 @@ shader_parameter/sclera_normal_texture = ExtResource("5_jvxbi")
 shader_parameter/iris_normal_texture = ExtResource("3_kn1sv")
 shader_parameter/normal_strength = 1.5
 shader_parameter/iris_scale = 3.5
-shader_parameter/roughness = 0.1
+shader_parameter/roughness = 0.0
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/texture_heightmap = ExtResource("6_6li8n")
-shader_parameter/heightmap_scale = 40.0
-shader_parameter/heightmap_min_layers = 0
-shader_parameter/heightmap_max_layers = 0
+shader_parameter/heightmap_scale = 35.00000242889561
+shader_parameter/heightmap_min_layers = 1
+shader_parameter/heightmap_max_layers = 1
 shader_parameter/heightmap_flip = Vector2(1, 1)
 shader_parameter/subsurface_scattering = true
 shader_parameter/use_noise = true
