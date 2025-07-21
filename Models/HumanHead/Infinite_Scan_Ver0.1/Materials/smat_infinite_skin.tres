@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://bok8104w80smq"]
 
-[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader_v2.gdshader" id="1_8yon7"]
-[ext_resource type="Texture2D" uid="uid://dfpv6v1xepmg0" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02_AO2_SmoothUV.png" id="2_ajqh4"]
+[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader.gdshader" id="1_8yon7"]
+[ext_resource type="Texture2D" uid="uid://j0b7hx3dn2o8" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Images/Infinite-Level_02_AO3.png" id="2_8yon7"]
 [ext_resource type="Gradient" uid="uid://bg5wg2pb2tpm7" path="res://Resources/lightwarp_skin1.tres" id="3_8yon7"]
 [ext_resource type="Texture2D" uid="uid://dpa1a3ensid5" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Images/Map-COL.jpg" id="4_22rnj"]
 [ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Resources/skin_micro_nrm_ao_2.png" id="5_ajqh4"]
@@ -21,18 +21,18 @@ shader_parameter/roughness = 0.4
 shader_parameter/specular = 0.7
 shader_parameter/double_specularity = true
 shader_parameter/metallic = 0.0
-shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 1, 0)
 shader_parameter/texture_normal = ExtResource("6_wv05w")
 shader_parameter/normal_strength = 1.0
-shader_parameter/use_micro_detail = false
+shader_parameter/use_micro_detail = true
 shader_parameter/micro_detail_scale = 60.0
-shader_parameter/micro_normal_strength = 0.5
-shader_parameter/micro_ao_strength = 0.4
+shader_parameter/micro_normal_strength = 0.200000057
+shader_parameter/micro_ao_strength = 0.30000006175000005
 shader_parameter/texture_micro_detail = ExtResource("5_ajqh4")
-shader_parameter/use_ambient_occlusion = false
-shader_parameter/ambient_occlusion_texture = ExtResource("2_ajqh4")
-shader_parameter/ao_strength = 0.3
-shader_parameter/ao_block_light = 0.3
+shader_parameter/use_ambient_occlusion = true
+shader_parameter/ambient_occlusion_texture = ExtResource("2_8yon7")
+shader_parameter/ao_strength = 0.5000000237500001
+shader_parameter/ao_block_light = 0.30000001425
 shader_parameter/use_subsurface_scattering = true
 shader_parameter/use_noise = true
 shader_parameter/subsurface_scattering_strength = 0.4
@@ -43,7 +43,7 @@ shader_parameter/old_lightwarp_fallof = false
 shader_parameter/lightwarp = SubResource("GradientTexture1D_kuytg")
 shader_parameter/texture_sss_noise = ExtResource("7_6g15d")
 shader_parameter/translucency = false
-shader_parameter/translucency_strength = 2.0
+shader_parameter/translucency_strength = 0.75
 shader_parameter/brow_down_L = 0.0
 shader_parameter/brow_down_R = 0.0
 shader_parameter/nose_sneer_L = 0.0

@@ -1,14 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://cx3ke36luq2sr"]
+[gd_scene load_steps=20 format=3 uid="uid://cx3ke36luq2sr"]
 
 [ext_resource type="ArrayMesh" uid="uid://dgaq4f263bcpf" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02.OBJ" id="1_ahks5"]
 [ext_resource type="Texture2D" uid="uid://bia04147fvbed" path="res://reading_room_4k.hdr" id="1_xhaxv"]
 [ext_resource type="Script" uid="uid://b40e0c3m2d0ks" path="res://Scripts/auto_rotate.gd" id="2_jqh26"]
 [ext_resource type="Script" uid="uid://3fqhmlbfjxu8" path="res://Scripts/head_visuas.gd" id="4_6cvmo"]
+[ext_resource type="Material" uid="uid://c2cjfk5lo68rq" path="res://Models/HumanHead/EmilyHeadScan/Materials/mat_emilu_skin_standardmat.tres" id="5_5m3cl"]
 [ext_resource type="PackedScene" uid="uid://c1to4ajlo0oyl" path="res://Models/HumanHead/EmilyHeadScan/Emili_Head_Optimized.glb" id="5_kre5v"]
 [ext_resource type="Script" uid="uid://douqcvauc0rtf" path="res://Scripts/wrinkle_map_system.gd" id="7_ybsm3"]
 [ext_resource type="Material" uid="uid://bok8104w80smq" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Materials/smat_infinite_skin.tres" id="8_fw5fm"]
 [ext_resource type="Script" uid="uid://2rlq2dosu6m1" path="res://Scripts/ui_main.gd" id="10_wtu8x"]
 [ext_resource type="Script" uid="uid://c6e14a85jebsc" path="res://Scripts/face_demo_camera.gd" id="11_0jrl4"]
+[ext_resource type="Texture2D" uid="uid://ct6xo0he0ieiu" path="res://splash_screen.png" id="13_qkn5b"]
 [ext_resource type="Script" uid="uid://boijn2aycwjpd" path="res://Scripts/mini_debugger.gd" id="14_a2qj3"]
 [ext_resource type="Script" uid="uid://bwu05et5myu5m" path="res://Scripts/lighting_setup.gd" id="14_yjmae"]
 
@@ -56,6 +58,8 @@ glow_hdr_scale = 1.4
 fog_light_energy = 0.83
 fog_sun_scatter = 1.0
 fog_density = 0.2079
+volumetric_fog_density = 0.005
+volumetric_fog_gi_inject = 0.07
 adjustment_enabled = true
 adjustment_color_correction = SubResource("GradientTexture1D_ooj47")
 
@@ -63,9 +67,10 @@ adjustment_color_correction = SubResource("GradientTexture1D_ooj47")
 auto_exposure_enabled = true
 auto_exposure_scale = 0.12
 auto_exposure_speed = 1.0
-dof_blur_far_distance = 0.3
-dof_blur_far_transition = 0.47
-dof_blur_amount = 0.31
+dof_blur_far_enabled = true
+dof_blur_far_distance = 0.52
+dof_blur_far_transition = 0.15
+dof_blur_amount = 0.2
 auto_exposure_min_sensitivity = 12.0
 auto_exposure_max_sensitivity = 350.0
 
@@ -84,7 +89,7 @@ handle_input_locally = false
 use_debanding = true
 anisotropic_filtering_level = 4
 positional_shadow_atlas_size = 16384
-size = Vector2i(1920, 1000)
+size = Vector2i(1600, 900)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
@@ -96,10 +101,10 @@ camera_attributes = SubResource("CameraAttributesPractical_0iug7")
 transform = Transform3D(0.969016, 0, -0.246999, 0, 1, 0, 0.246999, 0, 0.969016, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.201, 0.378)
-fov = 24.2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.201, 0.593)
+fov = 25.0
 script = ExtResource("11_0jrl4")
-min_fov = 5.0
+min_fov = 2.0
 
 [node name="Head" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("2_jqh26")
@@ -107,6 +112,7 @@ rotation_sensitivity = 0.1
 
 [node name="HeadVisuals" type="Node3D" parent="SubViewportContainer/SubViewport/Head"]
 script = ExtResource("4_6cvmo")
+standard_material_3d = ExtResource("5_5m3cl")
 
 [node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" node_paths=PackedStringArray("mesh") instance=ExtResource("5_kre5v")]
 transform = Transform3D(0.0119473, 0.000345611, 0.00106945, -0.000346993, 0.011995, 2.4025e-11, -0.001069, -3.09241e-05, 0.0119523, -0.00207924, 0.122231, 0.0265137)
@@ -114,96 +120,32 @@ script = ExtResource("7_ybsm3")
 mesh = NodePath("Armature/Skeleton3D/Emily_Head")
 
 [node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature" index="0"]
-bones/3/rotation = Quaternion(-0.10074324, 0.021815777, -0.022852018, 0.9944108)
-bones/4/rotation = Quaternion(0.68221354, 0.0017951626, 0.031345163, 0.73047864)
-bones/5/rotation = Quaternion(0.6678315, 0.015999787, -0.065070465, 0.74129003)
+bones/3/rotation = Quaternion(-0.08573442, 0.00095272803, -0.0027906022, 0.9963137)
+bones/4/rotation = Quaternion(0.69081104, 0.020946186, 0.013091629, 0.72261333)
+bones/5/rotation = Quaternion(0.6763242, 0.03359682, -0.083757296, 0.73105514)
 
 [node name="Emily_Face_Details" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="0"]
 extra_cull_margin = 50.0
-blend_shapes/browDownLeft = 0.00084724015
-blend_shapes/browDownRight = 0.00084724015
-blend_shapes/browInnerUp = 5.8021513e-05
-blend_shapes/browOuterUpLeft = 0.0007587681
-blend_shapes/browOuterUpRight = 0.010067191
-blend_shapes/cheekSquintLeft = 3.0666983e-05
-blend_shapes/eyeLookInRight = 4.639574e-05
-blend_shapes/eyeLookOutLeft = 4.9670212e-05
-blend_shapes/eyeLookUpLeft = 0.31180653
-blend_shapes/eyeLookUpRight = 0.31180635
-blend_shapes/eyeSquintLeft = 1.1257389e-05
-blend_shapes/eyeSquintRight = 1.1087937e-05
-blend_shapes/eyeWideLeft = 0.00052937097
-blend_shapes/eyeWideRight = 0.00067718484
-blend_shapes/jawForward = 0.035424378
-blend_shapes/jawLeft = 0.0010573645
-blend_shapes/jawOpen = 0.0002534425
-blend_shapes/jawRight = 0.00024457526
-blend_shapes/mouthClose = 3.7641505e-05
-blend_shapes/mouthDimpleLeft = 0.0012553683
-blend_shapes/mouthDimpleRight = 0.0009774218
-blend_shapes/mouthFrownLeft = 0.00017998577
-blend_shapes/mouthFrownRight = 0.0017217181
-blend_shapes/mouthFunnel = 1.7867162e-05
-blend_shapes/mouthLeft = 0.031752706
-blend_shapes/mouthLowerDownLeft = 0.0007015669
-blend_shapes/mouthPressLeft = 0.0006474424
-blend_shapes/mouthPressRight = 0.0007371665
-blend_shapes/mouthPucker = 2.0866068e-05
-blend_shapes/mouthRight = 0.0012230553
-blend_shapes/mouthRollLower = 0.06908672
-blend_shapes/mouthRollUpper = 0.0005015636
-blend_shapes/mouthShrugLower = 0.00023813918
-blend_shapes/mouthShrugUpper = 0.00051717047
-blend_shapes/mouthSmileLeft = 0.0008178979
-blend_shapes/mouthSmileRight = 0.0008700147
-blend_shapes/mouthStretchLeft = 0.007942034
-blend_shapes/mouthStretchRight = 0.019686619
-blend_shapes/mouthUpperUpLeft = 0.00025136909
-blend_shapes/mouthUpperUpRight = 0.00052228116
-blend_shapes/noseSneerLeft = 7.2388546e-05
+blend_shapes/browDownLeft = 0.00021188644
+blend_shapes/browDownRight = 0.00021188644
+blend_shapes/eyeLookInRight = 0.15695164
+blend_shapes/eyeLookOutLeft = 0.15694329
+blend_shapes/eyeLookUpLeft = 0.23467557
+blend_shapes/eyeLookUpRight = 0.234688
+blend_shapes/jawLeft = 0.018227927
+blend_shapes/mouthFrownRight = 0.008502184
+blend_shapes/mouthRollLower = 0.00010837587
 
 [node name="Emily_Head" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="1"]
-blend_shapes/browDownLeft = 0.00084724015
-blend_shapes/browDownRight = 0.00084724015
-blend_shapes/browInnerUp = 5.8021513e-05
-blend_shapes/browOuterUpLeft = 0.0007587681
-blend_shapes/browOuterUpRight = 0.010067191
-blend_shapes/cheekSquintLeft = 3.0666983e-05
-blend_shapes/eyeLookInRight = 4.639574e-05
-blend_shapes/eyeLookOutLeft = 4.9670212e-05
-blend_shapes/eyeLookUpLeft = 0.31180653
-blend_shapes/eyeLookUpRight = 0.31180635
-blend_shapes/eyeSquintLeft = 1.1257389e-05
-blend_shapes/eyeSquintRight = 1.1087937e-05
-blend_shapes/eyeWideLeft = 0.00052937097
-blend_shapes/eyeWideRight = 0.00067718484
-blend_shapes/jawForward = 0.035424378
-blend_shapes/jawLeft = 0.0010573645
-blend_shapes/jawOpen = 0.0002534425
-blend_shapes/jawRight = 0.00024457526
-blend_shapes/mouthClose = 3.7641505e-05
-blend_shapes/mouthDimpleLeft = 0.0012553683
-blend_shapes/mouthDimpleRight = 0.0009774218
-blend_shapes/mouthFrownLeft = 0.00017998577
-blend_shapes/mouthFrownRight = 0.0017217181
-blend_shapes/mouthFunnel = 1.7867162e-05
-blend_shapes/mouthLeft = 0.031752706
-blend_shapes/mouthLowerDownLeft = 0.0007015669
-blend_shapes/mouthPressLeft = 0.0006474424
-blend_shapes/mouthPressRight = 0.0007371665
-blend_shapes/mouthPucker = 2.0866068e-05
-blend_shapes/mouthRight = 0.0012230553
-blend_shapes/mouthRollLower = 0.06908672
-blend_shapes/mouthRollUpper = 0.0005015636
-blend_shapes/mouthShrugLower = 0.00023813918
-blend_shapes/mouthShrugUpper = 0.00051717047
-blend_shapes/mouthSmileLeft = 0.0008178979
-blend_shapes/mouthSmileRight = 0.0008700147
-blend_shapes/mouthStretchLeft = 0.007942034
-blend_shapes/mouthStretchRight = 0.019686619
-blend_shapes/mouthUpperUpLeft = 0.00025136909
-blend_shapes/mouthUpperUpRight = 0.00052228116
-blend_shapes/noseSneerLeft = 7.2388546e-05
+blend_shapes/browDownLeft = 0.00021188644
+blend_shapes/browDownRight = 0.00021188644
+blend_shapes/eyeLookInRight = 0.15695164
+blend_shapes/eyeLookOutLeft = 0.15694329
+blend_shapes/eyeLookUpLeft = 0.23467557
+blend_shapes/eyeLookUpRight = 0.234688
+blend_shapes/jawLeft = 0.018227927
+blend_shapes/mouthFrownRight = 0.008502184
+blend_shapes/mouthRollLower = 0.00010837587
 
 [node name="Eye - Realistic_002" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="2"]
 cast_shadow = 0
@@ -227,50 +169,109 @@ rotation_sensitivity = 0.2
 script = ExtResource("14_yjmae")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
-transform = Transform3D(0.504799, -0.513473, 0.693919, 2.32283e-09, 0.803857, 0.594823, -0.863237, -0.300266, 0.405786, 0, 0, 0)
-light_energy = 2.0
-light_specular = 2.0
+transform = Transform3D(0.6858184, -0.43289593, 0.5850252, 0, 0.80385697, 0.5948229, -0.72777283, -0.40794045, 0.5512998, 0, 0, 0)
+light_energy = 2.5
+shadow_enabled = true
+shadow_bias = 0.001
+shadow_blur = 2.0
+directional_shadow_mode = 0
+directional_shadow_split_1 = 0.5
+directional_shadow_split_2 = 0.3
+directional_shadow_split_3 = 0.6
+directional_shadow_max_distance = 0.8
+directional_shadow_pancake_size = 15.0
+
+[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
+transform = Transform3D(-0.33709532, -0.5600082, 0.7568076, 0, 0.80385697, 0.5948229, -0.9414705, 0.20051202, -0.27097642, 0, 0, 0)
+light_energy = 8.0
 shadow_enabled = true
 shadow_bias = 0.001
 shadow_blur = 4.0
-directional_shadow_split_1 = 0.0
+directional_shadow_mode = 0
+directional_shadow_split_1 = 0.5
 directional_shadow_split_2 = 0.3
 directional_shadow_split_3 = 0.6
-directional_shadow_max_distance = 1.0
+directional_shadow_max_distance = 1.5
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
 transform = Transform3D(0.1554, -0.905919, -0.393905, 7.61903e-09, -0.398749, 0.91706, -0.987852, -0.142511, -0.0619656, 0, 0, 0)
 light_color = Color(0.587668, 0.686282, 0.761403, 1)
-light_energy = 0.5
+light_energy = 4.0
 light_specular = 0.0
 shadow_enabled = true
 shadow_bias = 0.001
-shadow_blur = 10.0
-directional_shadow_max_distance = 4.0
+shadow_blur = 5.0
+directional_shadow_mode = 0
+directional_shadow_max_distance = 1.7
+
+[node name="DirectionalLight3D5" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
+transform = Transform3D(0.91982186, -0.08825668, -0.38228145, -8.5182165e-08, -0.97436976, 0.22495103, -0.39233723, -0.20691472, -0.8962465, 0, 0, 0)
+light_color = Color(0.587668, 0.686282, 0.761403, 1)
+light_energy = 4.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = 0.002
+shadow_blur = 5.0
+directional_shadow_mode = 0
+directional_shadow_max_distance = 1.7
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup1"]
-transform = Transform3D(0.933205, 0.337674, 0.122903, -5.17512e-09, 0.34202, -0.939693, -0.359346, 0.876925, 0.319175, 0, 0, 0)
+transform = Transform3D(0.99556255, -0.089502275, -0.029081076, 0, 0.3090168, -0.9510569, 0.09410837, 0.94683516, 0.30764565, 0, 0, 0)
 light_color = Color(0.84982, 0.611376, 0.445335, 1)
 light_energy = 0.4
 light_specular = 0.0
 shadow_enabled = true
 shadow_bias = 0.001
+shadow_blur = 5.0
+directional_shadow_mode = 0
+directional_shadow_max_distance = 1.6
+
+[node name="LightingSetup2" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
+visible = false
+script = ExtResource("14_yjmae")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
+transform = Transform3D(0.504799, -0.513473, 0.693919, 2.32283e-09, 0.803857, 0.594823, -0.863237, -0.300266, 0.405786, 0, 0, 0)
+light_energy = 4.0
+shadow_enabled = true
+shadow_bias = 0.001
+shadow_blur = 4.0
+directional_shadow_split_2 = 0.3
+directional_shadow_split_3 = 0.6
+directional_shadow_max_distance = 1.0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
+transform = Transform3D(0.1554, -0.905919, -0.393905, 7.61903e-09, -0.398749, 0.91706, -0.987852, -0.142511, -0.0619656, 0, 0, 0)
+light_color = Color(0.587668, 0.686282, 0.761403, 1)
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = 0.001
 shadow_blur = 10.0
 directional_shadow_max_distance = 4.0
 
-[node name="LightingSetup2" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
+transform = Transform3D(0.933205, 0.337674, 0.122903, -5.17512e-09, 0.34202, -0.939693, -0.359346, 0.876925, 0.319175, 0, 0, 0)
+light_color = Color(0.84982, 0.611376, 0.445335, 1)
+light_energy = 0.8
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = 0.001
+shadow_blur = 10.0
+directional_shadow_max_distance = 4.0
+
+[node name="LightingSetup3" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0632671)
 visible = false
 script = ExtResource("14_yjmae")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup3"]
 transform = Transform3D(0.644124, 0.540881, -0.540881, 6.18173e-08, -0.707107, -0.707107, -0.764921, 0.455464, -0.455465, 0.391, 0.406, -0.121)
 light_energy = 1.5
 shadow_enabled = true
 shadow_bias = 0.005
 shadow_blur = 2.0
 
-[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup3"]
 transform = Transform3D(0.81815, -0.40659, 0.40659, 0, 0.707107, 0.707107, -0.575005, -0.578519, 0.578519, 0.348003, 0.521764, 0.445228)
 light_energy = 0.5
 shadow_enabled = true
@@ -279,25 +280,25 @@ shadow_normal_bias = 2.0
 shadow_reverse_cull_face = true
 shadow_blur = 4.0
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup2"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup3"]
 transform = Transform3D(0.644124, 0.540881, -0.540881, 6.18173e-08, -0.707107, -0.707107, -0.764921, 0.455464, -0.455465, -0.532522, 0.335, -1.15571)
 light_energy = 0.5
 shadow_enabled = true
 shadow_bias = 0.005
 shadow_blur = 1.649
 
-[node name="LightingSetup3" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
+[node name="LightingSetup4" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0632671)
 visible = false
 script = ExtResource("14_yjmae")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup3"]
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup4"]
 transform = Transform3D(0.644124, 0.540881, -0.540881, 0, 0.707107, 0.707107, 0.764921, -0.455464, 0.455465, 0.526344, 0.406, -0.265612)
 light_color = Color(1, 0.105882, 0.45098, 1)
 shadow_enabled = true
 shadow_bias = 0.005
 
-[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup3"]
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup4"]
 transform = Transform3D(0.977501, 0.149151, -0.149152, 1.37444e-08, 0.707107, 0.707107, 0.210932, -0.691197, 0.691198, -0.139679, 0.521764, 0.418311)
 light_color = Color(0, 0.337255, 1, 1)
 shadow_enabled = true
@@ -305,7 +306,7 @@ shadow_bias = 0.001
 shadow_normal_bias = 0.5
 shadow_blur = 1.3
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup3"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup4"]
 transform = Transform3D(0.644124, 0.540881, -0.540881, 0, 0.707107, 0.707107, 0.764921, -0.455464, 0.455465, -0.374961, 0.335, -0.510979)
 light_color = Color(0, 1, 0.784314, 1)
 light_energy = 0.5
@@ -313,20 +314,21 @@ shadow_enabled = true
 shadow_bias = 0.005
 shadow_blur = 1.649
 
-[node name="LightingSetup4" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
+[node name="LightingSetup5" type="Node3D" parent="SubViewportContainer/SubViewport/Lighting"]
 transform = Transform3D(0.995396, 0, -0.095846, 0, 1, 0, 0.095846, 0, 0.995396, 0, 0, 0.0632671)
 visible = false
 script = ExtResource("14_yjmae")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup4"]
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Lighting/LightingSetup5"]
 transform = Transform3D(1, -1.49012e-08, 2.23517e-08, 0, 0.627963, 0.778243, -2.98023e-08, -0.778243, 0.627963, 0.00143928, 0.358398, 0.0732565)
 shadow_enabled = true
-shadow_bias = 0.0
-shadow_blur = 10.0
+shadow_bias = 0.001
+shadow_blur = 3.0
 spot_range = 2.0
 
 [node name="UI" type="Control" parent="."]
 unique_name_in_owner = true
+process_mode = 3
 z_index = 1
 layout_mode = 3
 anchors_preset = 15
@@ -385,7 +387,6 @@ theme_override_constants/separation = 25
 [node name="LightingSetupText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Lighting Setup
-
 "
 horizontal_alignment = 1
 
@@ -417,6 +418,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "4"
 
+[node name="5" type="Button" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/LightingSetupButtons"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
 [node name="CastShadows" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -430,7 +437,19 @@ theme_override_constants/separation = 25
 [node name="MaterialText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Material
+"
+horizontal_alignment = 1
 
+[node name="StandardMaterial" type="CheckButton" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Switch to the StandardMaterial3D version (for comparison reasons)."
+text = "Use StandardMaterial"
+
+[node name="Spacing6" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 5
+text = "
 "
 horizontal_alignment = 1
 
@@ -462,8 +481,7 @@ layout_mode = 2
 [node name="RoughnessText" type="Label" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/Roughness"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Roughness
-"
+text = "Roughness"
 
 [node name="RoughnessSlider" type="HSlider" parent="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/Roughness"]
 unique_name_in_owner = true
@@ -566,10 +584,10 @@ text = "Translucency"
 
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 1
-anchors_preset = 15
+anchor_left = 0.18900001
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 363.0
+offset_left = 0.11999512
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -633,7 +651,6 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/AnimationPlayer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="UI/Control/AnimationPlayer/MarginContainer/HBoxContainer"]
@@ -645,19 +662,36 @@ text = "Play"
 
 [node name="AnimationSlider" type="HSlider" parent="UI/Control/AnimationPlayer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(1024, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 1.0
 step = 0.0010000000038417
 
+[node name="SplashScreen" type="TextureRect" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -469.33337
+offset_top = -264.0
+offset_right = 469.33337
+offset_bottom = 264.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(960, 540)
+texture = ExtResource("13_qkn5b")
+expand_mode = 1
+
 [connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetModel" to="SubViewportContainer/SubViewport/Head/HeadVisuals" method="_on_reset_model_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetCamera" to="SubViewportContainer/SubViewport/Node3D/Camera3D" method="_on_reset_camera_pressed"]
-[connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetLights" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_reset_lights_pressed"]
-[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/CastShadows" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_cast_shadows_toggled"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/ResetLights" to="SubViewportContainer/SubViewport/Lighting/LightingSetup2" method="_on_reset_lights_pressed"]
+[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/CastShadows" to="SubViewportContainer/SubViewport/Lighting/LightingSetup2" method="_on_cast_shadows_toggled"]
 [connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SkinColor" to="SubViewportContainer/SubViewport/Head/HeadVisuals" method="_on_skin_color_toggled"]
 [connection signal="color_changed" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SkinColorPicker" to="SubViewportContainer/SubViewport/Head/HeadVisuals" method="_on_skin_color_picker_color_changed"]
-[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SubsurfaceScattering" to="SubViewportContainer/SubViewport/Lighting/LightingSetup1" method="_on_cast_shadows_toggled"]
+[connection signal="toggled" from="UI/Panel/MarginContainer/ScrollContainer/VBoxContainer/SubsurfaceScattering" to="SubViewportContainer/SubViewport/Lighting/LightingSetup2" method="_on_cast_shadows_toggled"]
 
 [editable path="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized"]

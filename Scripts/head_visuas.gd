@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var standard_material_3d: Material
+
 @onready var infinite_level_02: MeshInstance3D = $"Infinite-level02"
 #@onready var emily_21: MeshInstance3D = $Emily21
 @onready var emily_21: MeshInstance3D = $Emili_Head_Optimized/Armature/Skeleton3D/Emily_Head
@@ -14,6 +16,8 @@ extends Node3D
 @onready var tinted_shadow: CheckButton = %TintedShadow
 @onready var lightwarp: CheckButton = %Lightwarp
 @onready var translucency: CheckButton = %Translucency
+@onready var standard_mat_toggle: CheckButton = %StandardMaterial
+
 @onready var play_button: Button = %PlayButton
 @onready var animation_slider: HSlider = %AnimationSlider
 
@@ -65,6 +69,9 @@ func _ready() -> void:
 	
 	translucency.toggled.connect(on_translucency_toggle)
 	translucency.button_pressed = skin_parameter("translucency")
+	
+	standard_mat_toggle.toggled.connect(on_standard_mat_toggle)
+	standard_mat_toggle.button_pressed = false
 	
 	
 	play_button.pressed.connect(on_play_pressed)
@@ -144,6 +151,14 @@ func on_translucency_toggle(value: float) -> void:
 	else:
 		Autoload.log_message("Translucency toggled OFF")
 		
+func on_standard_mat_toggle(value: float) -> void:
+	if value:
+		emily_21.set_surface_override_material(0, standard_material_3d)
+	else:
+		emily_21.set_surface_override_material(0, null)
+
+
+#Animation Player Logic:
 func on_play_pressed() -> void:
 	if animation_player.callback_mode_process == idle:
 		paused = true

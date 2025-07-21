@@ -3,18 +3,17 @@ extends Camera3D
 # Variables to define FOV limits and sensitivity
 @export var min_fov: float = 10.0
 @export var max_fov: float = 75.0
+@export var default_fov: float = 25.0
 @export var zoom_sensitivity: float = 2.0
 @export var movement_sensitivity: float = 2.0
 
 var dragging: bool = false
 var previous_mouse_position: Vector2
 var default_pos: Vector3
-var default_fov: float
 var tween: Tween
 
 func _ready() -> void:
 	default_pos = position
-	default_fov = 45.
 	fov = default_fov
 	
 	
@@ -22,10 +21,10 @@ func _ready() -> void:
 #	tween.tween_property(self, property, )
 
 func _input(event: InputEvent) -> void:
-	tween = create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			tween = create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			tween.tween_property(
 				self, 
 				"fov",
@@ -34,6 +33,7 @@ func _input(event: InputEvent) -> void:
 			)
 			
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			tween = create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			tween.tween_property(
 				self, 
 				"fov",

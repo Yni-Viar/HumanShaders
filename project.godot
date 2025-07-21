@@ -13,7 +13,10 @@ config_version=5
 config/name="Human Shaders (Public)"
 run/main_scene="res://SkinShaderTest.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="uid://ct6xo0he0ieiu"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=2000
 
 [autoload]
 
@@ -21,15 +24,16 @@ Autoload="*res://Scripts/autoload.gd"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1000
-window/size/borderless=true
+window/size/viewport_width=1600
+window/size/viewport_height=900
 
 [file_customization]
 
 folder_colors={
+"res://Addons/": "gray",
 "res://Models/": "red",
 "res://Models/HumanHead/": "orange",
+"res://Resources/": "purple",
 "res://Scripts/": "green",
 "res://Shaders/": "blue"
 }
@@ -59,6 +63,7 @@ textures/default_filters/texture_mipmap_bias=-0.2
 environment/glow/upscale_mode=0
 environment/screen_space_reflection/roughness_quality=3
 environment/subsurface_scattering/subsurface_scattering_quality=2
+environment/volumetric_fog/volume_size=256
 anti_aliasing/quality/use_taa=true
 anti_aliasing/quality/use_debanding=true
 lights_and_shadows/positional_shadow/atlas_size=16384

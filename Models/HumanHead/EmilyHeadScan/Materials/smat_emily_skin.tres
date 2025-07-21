@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://bcow8qj5qfkbh"]
 
-[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader_v2.gdshader" id="1_ftndh"]
+[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader.gdshader" id="1_ftndh"]
 [ext_resource type="Texture2D" uid="uid://bwhw8gfdxtmjd" path="res://Models/HumanHead/EmilyHeadScan/00_diffuse_unlit_raw_4k.png" id="2_lghnt"]
 [ext_resource type="Texture2D" uid="uid://d3w8bga75p7sp" path="res://Models/HumanHead/EmilyHeadScan/00_ao_unpainted_1k.png" id="2_o4kx1"]
 [ext_resource type="Gradient" uid="uid://bg5wg2pb2tpm7" path="res://Resources/lightwarp_skin1.tres" id="3_s2iwt"]
@@ -39,7 +39,7 @@ shader_parameter/ao_strength = 0.2000000095
 shader_parameter/ao_block_light = 0.30000001425
 shader_parameter/use_subsurface_scattering = true
 shader_parameter/use_noise = true
-shader_parameter/subsurface_scattering_strength = 0.4
+shader_parameter/subsurface_scattering_strength = 0.249999994412
 shader_parameter/skin_smoothness = 5.0
 shader_parameter/skin_fallof_smoothness = 1.0
 shader_parameter/tinted_shadow_penumbra = false
@@ -52,16 +52,16 @@ shader_parameter/texture_translucency = ExtResource("8_tv23y")
 shader_parameter/texture_translucency_color = ExtResource("9_vsn5t")
 shader_parameter/wrinkle_1_normal = ExtResource("11_xjn67")
 shader_parameter/wrinkle_1_mask_texture = ExtResource("5_2f282")
-shader_parameter/brow_down_L = 0.0004598143495968543
-shader_parameter/brow_down_R = 0.00042362008
-shader_parameter/nose_sneer_L = 7.2388546e-05
+shader_parameter/brow_down_L = 0.00010594322
+shader_parameter/brow_down_R = 0.00010594322
+shader_parameter/nose_sneer_L = 0.0
 shader_parameter/nose_sneer_R = 0.0
-shader_parameter/eye_squint_L = 3.629567709140247e-05
-shader_parameter/eye_squint_R = 5.5439687e-06
-shader_parameter/mouth_stretch_L = 0.008195476431865245
-shader_parameter/mouth_stretch_R = 0.01994006132008508
-shader_parameter/mouth_smile_L = 0.03257060347823426
-shader_parameter/mouth_smile_R = 0.002093070012051612
+shader_parameter/eye_squint_L = 0.0
+shader_parameter/eye_squint_R = 0.0
+shader_parameter/mouth_stretch_L = 0.0
+shader_parameter/mouth_stretch_R = 0.0
+shader_parameter/mouth_smile_L = 0.0
+shader_parameter/mouth_smile_R = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
