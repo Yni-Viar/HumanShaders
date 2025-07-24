@@ -168,7 +168,7 @@ void fragment() {
 	}
 
 	final_albedo = albedo.rgb * albedo_tex.rgb;
-	final_albedo *= clamp(vec3(wrinkle_1.b +0.25, wrinkle_1.b, wrinkle_1.b), 0.,1.);
+	final_albedo *= clamp(vec3(wrinkle_1.b +0.25, wrinkle_1.b, wrinkle_1.b), 0.0,1.0);
 
 	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
 	final_metallic = metallic_tex * metallic;
@@ -182,7 +182,7 @@ void fragment() {
 	//float spec = max(dot(NORMAL, LIGHT_VERTEX * LIGHT_VERTEX), 0.0);
 
 	//ALBEDO = vec3(1.);
-	SPECULAR = clamp(specular * wrinkle_1.b, 0.,1.);
+	SPECULAR = clamp(specular, 0.,1.);
 	if (use_ambient_occlusion){
 		SPECULAR *= ao;
 	}
@@ -277,11 +277,19 @@ void light()
 		vec3 dn_r = custom_normal(normal_blending(textureLod(texture_normal, UV, (1.*s) * wrinkle_1.b * normal_depth).rgb, wrinkle_1));
 		vec3 dn_g = custom_normal(normal_blending(textureLod(texture_normal, UV, (0.8*s) * wrinkle_1.b * normal_depth).rgb, wrinkle_1));
 		vec3 dn_b = custom_normal(normal_blending(textureLod(texture_normal, UV, (0.7*s) * wrinkle_1.b * normal_depth).rgb, wrinkle_1));
-
+		
+		//Include micro normals in the mix:
+		vec3 m_normal = texture(texture_micro_detail, UV * micro_detail_scale).rgb;
+		m_normal = mix(vec3(.5,.5,1.), vec3(m_normal.xy, 1.), micro_normal_strength);
+		
+		dn_g = normal_blending(dn_g, m_normal);
+		dn_b = normal_blending(dn_b, m_normal);
+		////
+		
 		float sf = skin_fallof_smoothness;
-
+		
 		float wrapped_r = smoothstep(0.4 /sf, 1.2 *sf, dot(dn_r, LIGHT) * wrap + (1.0-wrap));
-		float wrapped_g = smoothstep(0.42 /sf, 1.2 *sf, dot(dn_g, LIGHT) * wrap + (1.0-wrap));
+		float wrapped_g = smoothstep(0.425 /sf, 1.2 *sf, dot(dn_g, LIGHT) * wrap + (1.0-wrap));
 		float wrapped_b = smoothstep(0.44 /sf, 1.2 *sf, dot(dn_b, LIGHT) * wrap + (1.0-wrap));
 		vec3 wrapped_rgb = vec3(wrapped_r, wrapped_g, wrapped_b);
 		if (use_ambient_occlusion){
