@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cx3ke36luq2sr"]
+[gd_scene load_steps=18 format=3 uid="uid://cx3ke36luq2sr"]
 
 [ext_resource type="ArrayMesh" uid="uid://dgaq4f263bcpf" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02.OBJ" id="1_ahks5"]
 [ext_resource type="Texture2D" uid="uid://n2dlp5ggo2pu" path="res://Resources/pp_colorcorrection_2.tres" id="1_qfyww"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://3fqhmlbfjxu8" path="res://Scripts/head_visuas.gd" id="4_6cvmo"]
 [ext_resource type="Material" uid="uid://c2cjfk5lo68rq" path="res://Models/HumanHead/EmilyHeadScan/Materials/mat_emilu_skin_standardmat.tres" id="5_5m3cl"]
 [ext_resource type="PackedScene" uid="uid://c1to4ajlo0oyl" path="res://Models/HumanHead/EmilyHeadScan/Emili_Head_Optimized.glb" id="5_kre5v"]
-[ext_resource type="Script" uid="uid://douqcvauc0rtf" path="res://Scripts/wrinkle_map_system.gd" id="7_ybsm3"]
 [ext_resource type="Material" uid="uid://bok8104w80smq" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Materials/smat_infinite_skin.tres" id="8_fw5fm"]
 [ext_resource type="Script" uid="uid://2rlq2dosu6m1" path="res://Scripts/ui_main.gd" id="10_wtu8x"]
 [ext_resource type="Script" uid="uid://c6e14a85jebsc" path="res://Scripts/face_demo_camera.gd" id="11_0jrl4"]
@@ -107,10 +106,8 @@ world_env = NodePath("../WorldEnvironment")
 script = ExtResource("4_6cvmo")
 standard_material_3d = ExtResource("5_5m3cl")
 
-[node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" node_paths=PackedStringArray("mesh") instance=ExtResource("5_kre5v")]
+[node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" instance=ExtResource("5_kre5v")]
 transform = Transform3D(0.0119473, 0.000345611, 0.00106945, -0.000346993, 0.011995, 2.4025e-11, -0.001069, -3.09241e-05, 0.0119523, -0.00207924, 0.122231, 0.0265137)
-script = ExtResource("7_ybsm3")
-mesh = NodePath("Armature/Skeleton3D/Emily_Head")
 
 [node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature" index="0"]
 bones/3/rotation = Quaternion(-0.08573442, 0.00095272803, -0.0027906022, 0.9963137)

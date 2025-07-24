@@ -6,7 +6,6 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_sc
 group_uniforms albedo;
 uniform vec4 albedo : source_color = vec4(1.);
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-//uniform float point_size : hint_range(0.1, 128.0, 0.1);
 
 group_uniforms roughness;
 uniform float roughness : hint_range(0.0, 1.0) = 0.4;
@@ -56,22 +55,6 @@ uniform float translucency_strength : hint_range(0.0, 2.0, 0.01) = 0.75;
 uniform sampler2D texture_translucency : hint_default_white, filter_linear_mipmap, repeat_enable;
 uniform sampler2D texture_translucency_color : source_color, filter_linear, repeat_disable;
 
-group_uniforms wrinkle_maps;
-uniform sampler2D wrinkle_1_normal: hint_default_white, filter_linear_mipmap, repeat_enable;
-uniform sampler2D wrinkle_1_mask_texture: hint_default_white, filter_linear_mipmap, repeat_enable;
-
-group_uniforms wrinkles;
-uniform float brow_down_L;
-uniform float brow_down_R;
-uniform float nose_sneer_L;
-uniform float nose_sneer_R;
-uniform float eye_squint_L;
-uniform float eye_squint_R;
-uniform float mouth_stretch_L;
-uniform float mouth_stretch_R;
-uniform float mouth_smile_L;
-uniform float mouth_smile_R;
-
 group_uniforms u_v;
 uniform vec3 uv1_scale = vec3(1.);
 uniform vec3 uv1_offset = vec3(0.);
@@ -86,10 +69,6 @@ varying float ao;
 varying float linear_depth;
 varying float smooth_depth;
 varying float sss_tex;
-varying vec3 wrinkle_1;
-//varying vec3 wrinkle_1_lod1;
-//varying vec3 wrinkle_1_lod2;
-//varying vec3 wrinkle_1_lod3;
 
 void vertex() {
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
@@ -140,27 +119,6 @@ void fragment() {
 	ao = texture(texture_normal, base_uv).b;
 	ao *= texture(ambient_occlusion_texture, base_uv).r;
 
-	//Wrinkle maps:
-	vec4 wrinkle_1_mask = texture(wrinkle_1_mask_texture, UV * .25);
-	vec4 wrinkle_1_mask2 = texture(wrinkle_1_mask_texture, UV * .25 + vec2(.25,0.));
-	vec4 wrinkle_1_mask3 = texture(wrinkle_1_mask_texture, UV * .25 + vec2(.0,.25));
-	vec4 wrinkle_1_mask4 = texture(wrinkle_1_mask_texture, UV * .25 + vec2(.25,.25));
-	vec4 wrinkle_1_mask5 = texture(wrinkle_1_mask_texture, UV * .25 + vec2(.5,.0));
-
-	float wrinkle_1_strength = wrinkle_1_mask.r * brow_down_L;
-	wrinkle_1_strength += wrinkle_1_mask.g * brow_down_R;
-	wrinkle_1_strength += wrinkle_1_mask2.r * nose_sneer_L;
-	wrinkle_1_strength += wrinkle_1_mask2.g * nose_sneer_R;
-	wrinkle_1_strength += (wrinkle_1_mask3.r * eye_squint_L) + (wrinkle_1_mask3.g * eye_squint_R);
-	wrinkle_1_strength += (wrinkle_1_mask4.r * mouth_stretch_L) + (wrinkle_1_mask4.g * mouth_stretch_R);
-	wrinkle_1_strength += (wrinkle_1_mask5.r * mouth_smile_L) + (wrinkle_1_mask5.g * mouth_smile_R);
-	wrinkle_1_strength = clamp(wrinkle_1_strength, 0., 1.);
-
-	wrinkle_1 = mix(vec3(.5,.5,1.), texture(wrinkle_1_normal, UV).rgb, wrinkle_1_strength * .75);
-	//wrinkle_1_lod1 = mix(vec3(.5,.5,1.), texture(wrinkle_1_normal, UV, 4).rgb, wrinkle_1_strength);
-	//wrinkle_1_lod2 = mix(vec3(.5,.5,1.), texture(wrinkle_1_normal, UV, 3).rgb, wrinkle_1_strength);
-	//wrinkle_1_lod3 = mix(vec3(.5,.5,1.), texture(wrinkle_1_normal, UV, 1).rgb, wrinkle_1_strength);
-
 	float micro_overlay = mix(0.5, micro_detail.b, micro_ao_strength * 2.);
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	if (use_micro_detail){
@@ -168,14 +126,11 @@ void fragment() {
 	}
 
 	final_albedo = albedo.rgb * albedo_tex.rgb;
-	final_albedo *= clamp(vec3(wrinkle_1.b +0.25, wrinkle_1.b, wrinkle_1.b), 0.0,1.0);
 
 	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
 	final_metallic = metallic_tex * metallic;
 	ALBEDO = final_albedo * (1.0 - final_metallic);
 
-
-	//ALBEDO = vec3(wrinkle_1_mask5.rgb);
 
 	//METALLIC = metallic_tex * metallic;
 
@@ -189,13 +144,13 @@ void fragment() {
 
 	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
-	ROUGHNESS = clamp(roughness_tex * roughness + (1. - wrinkle_1.b), 0.,1.);
+	ROUGHNESS = clamp(roughness_tex * roughness, 0.,1.);
 
 	// Normal Map: Enabled
 	vec3 micro_normal = mix(vec3(.5,.5,1.), vec3(micro_detail.xy, 1.), micro_normal_strength);
 
 	//Normal Map (For Specular):
-	vec3 normal_final = normal_blending(texture(texture_normal, base_uv).rgb, wrinkle_1);
+	vec3 normal_final = texture(texture_normal, base_uv).rgb;
 	normal_final = normal_blending(normal_final, micro_normal);
 	NORMAL_MAP = normal_final;
 	NORMAL_MAP_DEPTH = normal_strength;
@@ -224,8 +179,6 @@ void fragment() {
 		//ALBEDO = vec3(smooth_depth);
 		//float sss_depth = 1. - pow(clamp(world_camera.z,0.,1.), 0.5);
 	}
-
-	//Wrinkle maps:
 
 }
 float DistributionGGX(float cos_theta_m, float alpha){
@@ -274,9 +227,9 @@ void light()
 
 		//Calculate custom normal:
 		float s = skin_smoothness;
-		vec3 dn_r = custom_normal(normal_blending(textureLod(texture_normal, UV, (1.*s) * wrinkle_1.b * normal_depth).rgb, wrinkle_1));
-		vec3 dn_g = custom_normal(normal_blending(textureLod(texture_normal, UV, (0.8*s) * wrinkle_1.b * normal_depth).rgb, wrinkle_1));
-		vec3 dn_b = custom_normal(normal_blending(textureLod(texture_normal, UV, (0.7*s) * wrinkle_1.b * normal_depth).rgb, wrinkle_1));
+		vec3 dn_r = custom_normal(textureLod(texture_normal, UV, (1.*s) * normal_depth).rgb);
+		vec3 dn_g = custom_normal(textureLod(texture_normal, UV, (0.8*s) * normal_depth).rgb);
+		vec3 dn_b = custom_normal(textureLod(texture_normal, UV, (0.7*s) * normal_depth).rgb);
 		
 		//Include micro normals in the mix:
 		vec3 m_normal = texture(texture_micro_detail, UV * micro_detail_scale).rgb;
