@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://by2gftbg8mh52"]
 
 [ext_resource type="Shader" uid="uid://csvuff5c4qll4" path="res://Shaders/vshader_eye_wetness.tres" id="1_rhdrx"]
-[ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Resources/skin_micro_nrm_ao_2.png" id="2_5757m"]
+[ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Resources/skin_micro_nrm_ao.png" id="2_5757m"]
 
 [resource]
 render_priority = 0

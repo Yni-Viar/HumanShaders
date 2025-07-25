@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://xwyd3r00f7je"]
+[gd_scene load_steps=3 format=3 uid="uid://d3fc8my1b3kpr"]
 
-[ext_resource type="Script" uid="uid://dc8y888ii2jtu" path="res://Scripts/show_value.gd" id="1_v5ory"]
-[ext_resource type="Script" uid="uid://btt4xnclnro7e" path="res://Scripts/combine_values_test.gd" id="2_rlais"]
+[ext_resource type="Script" uid="uid://dc8y888ii2jtu" path="res://Scripts/Visualizer/show_value.gd" id="1_v5ory"]
+
+[sub_resource type="GDScript" id="GDScript_0fbet"]
+script/source = "extends Label
+
+@export var slider : HSlider
+@export var slider2 : HSlider
+
+func _process(delta: float) -> void:
+	var value = (slider.value + slider2.value) *.5
+	
+	text = str(value)
+"
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -53,6 +64,6 @@ offset_top = 121.0
 offset_right = 468.0
 offset_bottom = 145.0
 text = "Combined Values"
-script = ExtResource("2_rlais")
+script = SubResource("GDScript_0fbet")
 slider = NodePath("../HSlider")
 slider2 = NodePath("../HSlider2")

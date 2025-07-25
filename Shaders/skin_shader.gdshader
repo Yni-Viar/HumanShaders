@@ -9,7 +9,7 @@ uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_en
 
 group_uniforms roughness;
 uniform float roughness : hint_range(0.0, 1.0) = 0.4;
-uniform float specular : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform float specular : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform bool double_specularity = true;
 
 uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
@@ -142,7 +142,7 @@ void fragment() {
 		SPECULAR *= ao;
 	}
 
-	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	vec4 roughness_texture_channel = vec4(0.0, 1.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = clamp(roughness_tex * roughness, 0.,1.);
 

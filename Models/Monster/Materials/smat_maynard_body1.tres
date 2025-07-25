@@ -1,0 +1,58 @@
+[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://bmrceme41phte"]
+
+[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader.gdshader" id="1_tx1y8"]
+[ext_resource type="Texture2D" uid="uid://c5lu16fkl6kbf" path="res://Models/Monster/monster_1_Ch30_1002_Diffuse.png" id="2_tx1y8"]
+[ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Resources/skin_micro_nrm_ao.png" id="3_6jor6"]
+[ext_resource type="Texture2D" uid="uid://drhjr7y6c70nw" path="res://Models/Monster/monster_1_Ch30_1002_Normal.png" id="4_lrnu4"]
+[ext_resource type="Texture2D" uid="uid://btquk4sr5ic4c" path="res://Models/Monster/monster_1_Ch30_1002_Glossiness.png" id="5_6jor6"]
+[ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://Resources/InterleavedGradientNoise.png" id="6_rb71b"]
+[ext_resource type="Texture2D" uid="uid://d28htgdgv762y" path="res://Resources/translucency_gradient.tres" id="7_lrnu4"]
+
+[sub_resource type="Gradient" id="Gradient_63kco"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.25, 0.4, 0.6, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.05, 0.013, 0.0136167, 1, 0.27, 0.198405, 0.1701, 1, 0.43, 0.43, 0.43, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tx1y8"]
+gradient = SubResource("Gradient_63kco")
+use_hdr = true
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_tx1y8")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_tx1y8")
+shader_parameter/roughness = 0.6000000285
+shader_parameter/specular = 0.499999988824
+shader_parameter/double_specularity = true
+shader_parameter/texture_roughness = ExtResource("5_6jor6")
+shader_parameter/metallic = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/texture_normal = ExtResource("4_lrnu4")
+shader_parameter/normal_strength = 1.0
+shader_parameter/use_micro_detail = true
+shader_parameter/micro_detail_scale = 100.00000475
+shader_parameter/micro_normal_strength = 0.30000006175000005
+shader_parameter/micro_ao_strength = 0.30000006175000005
+shader_parameter/texture_micro_detail = ExtResource("3_6jor6")
+shader_parameter/use_ambient_occlusion = false
+shader_parameter/ao_strength = 0.5
+shader_parameter/ao_block_light = 0.5
+shader_parameter/use_subsurface_scattering = true
+shader_parameter/use_noise = true
+shader_parameter/subsurface_scattering_strength = 0.39999999105920003
+shader_parameter/skin_smoothness = 6.0000002850000005
+shader_parameter/skin_fallof_smoothness = 1.0
+shader_parameter/tinted_shadow_penumbra = false
+shader_parameter/old_lightwarp_fallof = false
+shader_parameter/lightwarp = SubResource("GradientTexture1D_tx1y8")
+shader_parameter/texture_sss_noise = ExtResource("6_rb71b")
+shader_parameter/translucency = false
+shader_parameter/translucency_strength = 0.75
+shader_parameter/texture_translucency_color = ExtResource("7_lrnu4")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)

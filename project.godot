@@ -20,7 +20,7 @@ boot_splash/minimum_display_time=2000
 
 [autoload]
 
-Autoload="*res://Scripts/autoload.gd"
+Autoload="*res://Scripts/Visualizer/autoload.gd"
 
 [display]
 
