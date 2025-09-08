@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://cx3ke36luq2sr"]
 
 [ext_resource type="ArrayMesh" uid="uid://dgaq4f263bcpf" path="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02.OBJ" id="1_ahks5"]
-[ext_resource type="Texture2D" uid="uid://n2dlp5ggo2pu" path="res://Resources/LUTs/pp_colorcorrection_2.tres" id="1_qfyww"]
+[ext_resource type="Texture2D" uid="uid://bcnq4b8ig3q2t" path="res://Resources/LUTs/pp_colorcorrection_1.tres" id="1_qfyww"]
 [ext_resource type="Texture2D" uid="uid://bia04147fvbed" path="res://Resources/HDRI/reading_room_4k.hdr" id="1_xhaxv"]
 [ext_resource type="Script" uid="uid://b40e0c3m2d0ks" path="res://Scripts/Visualizer/auto_rotate.gd" id="2_jqh26"]
 [ext_resource type="Script" uid="uid://3fqhmlbfjxu8" path="res://Scripts/Visualizer/head_visuas.gd" id="4_6cvmo"]
@@ -62,7 +62,7 @@ dof_blur_far_distance = 0.52
 dof_blur_far_transition = 0.15
 dof_blur_amount = 0.2
 auto_exposure_min_sensitivity = 12.0
-auto_exposure_max_sensitivity = 350.0
+auto_exposure_max_sensitivity = 550.0
 
 [node name="Node3D" type="Node3D"]
 
@@ -79,7 +79,7 @@ handle_input_locally = false
 use_debanding = true
 anisotropic_filtering_level = 4
 positional_shadow_atlas_size = 16384
-size = Vector2i(1600, 900)
+size = Vector2i(1920, 1080)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
@@ -105,15 +105,19 @@ world_env = NodePath("../WorldEnvironment")
 
 [node name="HeadVisuals" type="Node3D" parent="SubViewportContainer/SubViewport/Head" node_paths=PackedStringArray("mesh", "animation_player")]
 script = ExtResource("4_6cvmo")
-mesh = NodePath("monster_1/Armature/Skeleton3D/Ch30")
+mesh = NodePath("Emili_Head_Optimized/Armature/Skeleton3D/Emily_Head")
 material_index = 1
 materials = Array[int]([0, 1])
-animation_player = NodePath("monster_1/AnimationPlayer")
+animation_player = NodePath("Emili_Head_Optimized/AnimationPlayer")
 standard_material_3d = ExtResource("5_5m3cl")
 
 [node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" instance=ExtResource("5_kre5v")]
 transform = Transform3D(0.0119473, 0.000345611, 0.00106945, -0.000346993, 0.011995, 2.4025e-11, -0.001069, -3.09241e-05, 0.0119523, -0.00207924, 0.122231, 0.0265137)
-visible = false
+
+[node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature" index="0"]
+bones/3/rotation = Quaternion(-0.08573442, 0.00095272803, -0.0027906022, 0.9963137)
+bones/4/rotation = Quaternion(0.69081104, 0.020946186, 0.013091629, 0.72261333)
+bones/5/rotation = Quaternion(0.6763242, 0.03359682, -0.083757296, 0.73105514)
 
 [node name="Emily_Face_Details" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="0"]
 extra_cull_margin = 50.0
@@ -154,6 +158,7 @@ surface_material_override/0 = ExtResource("8_fw5fm")
 
 [node name="monster_1" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" instance=ExtResource("10_qfyww")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.436, -0.051)
+visible = false
 
 [node name="Lighting" type="Node3D" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("world_env")]
 script = ExtResource("2_jqh26")

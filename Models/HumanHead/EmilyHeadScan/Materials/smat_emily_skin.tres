@@ -1,9 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=11 format=3 uid="uid://bcow8qj5qfkbh"]
+[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://bcow8qj5qfkbh"]
 
 [ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader.gdshader" id="1_ftndh"]
 [ext_resource type="Texture2D" uid="uid://bwhw8gfdxtmjd" path="res://Models/HumanHead/EmilyHeadScan/00_diffuse_unlit_raw_4k.png" id="2_lghnt"]
 [ext_resource type="Texture2D" uid="uid://d3w8bga75p7sp" path="res://Models/HumanHead/EmilyHeadScan/00_ao_unpainted_1k.png" id="2_o4kx1"]
-[ext_resource type="Gradient" uid="uid://bg5wg2pb2tpm7" path="res://Resources/lightwarp_skin1.tres" id="3_s2iwt"]
 [ext_resource type="Texture2D" uid="uid://dxpv2if46fowj" path="res://Models/HumanHead/EmilyHeadScan/00_normal_spec_unpainted_4k.png" id="4_f1wt6"]
 [ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Resources/skin_micro_nrm_ao.png" id="5_s2iwt"]
 [ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://Resources/InterleavedGradientNoise.png" id="7_xjn67"]
@@ -11,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://d28htgdgv762y" path="res://Resources/translucency_gradient.tres" id="9_vsn5t"]
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_s2iwt"]
-gradient = ExtResource("3_s2iwt")
 use_hdr = true
 
 [resource]
