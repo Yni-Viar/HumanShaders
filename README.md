@@ -15,8 +15,14 @@ For now, the shaders available are:
 
 This is a work in progress and not actively maintained, don't expect frequent updates (or updates at all). Instead, use these shaders as base for your project, changing it to better suit your needs.
 
+#Licensing
 
-Digital Emily 2 head scan by [USC Institute for Creative Technologies](https://ict.usc.edu/) — [Project page](https://vgl.ict.usc.edu/Data/DigitalEmily2/).
+**Digital Emily 2**
+[Digital Emily 2](https://vgl.ict.usc.edu/Data/DigitalEmily2/) head scan by [USC Institute for Creative Technologies](https://ict.usc.edu/).
+**License note:** The licensing terms for this model are not clearly stated on the source website.  
+If you intend to use this model for anything beyond personal or non-commercial use, please contact the original creators at USC ICT for permission.
 
+
+**Infinite**
 Infinite, 3D Head Scan by Lee Perry-Smith is licensed under a Creative Commons Attribution 3.0 Unported License.
 
