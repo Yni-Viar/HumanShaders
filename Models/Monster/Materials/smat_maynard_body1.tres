@@ -1,12 +1,12 @@
 [gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://bmrceme41phte"]
 
-[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://Shaders/skin_shader.gdshader" id="1_tx1y8"]
+[ext_resource type="Shader" uid="uid://rwmp12dnfv7m" path="res://HumanShaders/skin_shader.gdshader" id="1_tx1y8"]
 [ext_resource type="Texture2D" uid="uid://c5lu16fkl6kbf" path="res://Models/Monster/monster_1_Ch30_1002_Diffuse.png" id="2_tx1y8"]
-[ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://Resources/skin_micro_nrm_ao.png" id="3_6jor6"]
+[ext_resource type="Texture2D" uid="uid://q081egd4y1v" path="res://HumanShaders/Resources/MicroDetail/skin_micro_nrm_ao.png" id="3_lrnu4"]
 [ext_resource type="Texture2D" uid="uid://drhjr7y6c70nw" path="res://Models/Monster/monster_1_Ch30_1002_Normal.png" id="4_lrnu4"]
 [ext_resource type="Texture2D" uid="uid://btquk4sr5ic4c" path="res://Models/Monster/monster_1_Ch30_1002_Glossiness.png" id="5_6jor6"]
-[ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://Resources/InterleavedGradientNoise.png" id="6_rb71b"]
-[ext_resource type="Texture2D" uid="uid://d28htgdgv762y" path="res://Resources/translucency_gradient.tres" id="7_lrnu4"]
+[ext_resource type="Texture2D" uid="uid://bmxxqd0d8ioy3" path="res://HumanShaders/Resources/InterleavedGradientNoise.png" id="6_rb71b"]
+[ext_resource type="Texture2D" uid="uid://d28htgdgv762y" path="res://HumanShaders/Resources/translucency_gradient.tres" id="7_lrnu4"]
 
 [sub_resource type="Gradient" id="Gradient_63kco"]
 interpolation_color_space = 2
@@ -36,7 +36,7 @@ shader_parameter/use_micro_detail = true
 shader_parameter/micro_detail_scale = 100.00000475
 shader_parameter/micro_normal_strength = 0.30000006175000005
 shader_parameter/micro_ao_strength = 0.30000006175000005
-shader_parameter/texture_micro_detail = ExtResource("3_6jor6")
+shader_parameter/texture_micro_detail = ExtResource("3_lrnu4")
 shader_parameter/use_ambient_occlusion = false
 shader_parameter/ao_strength = 0.5
 shader_parameter/ao_block_light = 0.5

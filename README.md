@@ -17,6 +17,11 @@ This is a work in progress and not actively maintained, don't expect frequent up
 
 # Licensing
 
+## Human Shaders
+
+Human Shaders and it's resources (All the content inside "HumanShader" folder) are licensed under MIT and CC0 License.
+
+
 ### Digital Emily 2
 [Digital Emily 2](https://vgl.ict.usc.edu/Data/DigitalEmily2/) head scan by [USC Institute for Creative Technologies](https://ict.usc.edu/).
 
@@ -26,4 +31,3 @@ If you intend to use this model for anything beyond personal or non-commercial u
 
 ### Infinite
 Infinite, 3D Head Scan by Lee Perry-Smith is licensed under a Creative Commons Attribution 3.0 Unported License.
-

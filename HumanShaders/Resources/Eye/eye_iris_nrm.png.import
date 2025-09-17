@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqlb7hii885vy"
-path.s3tc="res://.godot/imported/skin_micro_nrm_ao_3.png-90247e6143d60fca69aa8d43755656a7.s3tc.ctex"
+uid="uid://bcfgtc350v4n6"
+path.bptc="res://.godot/imported/eye_iris_nrm.png-89a38387979ebab10476c25e74d2d80f.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,13 +11,13 @@ metadata={
 
 [deps]
 
-source_file="res://Resources/skin_micro_nrm_ao_3.png"
-dest_files=["res://.godot/imported/skin_micro_nrm_ao_3.png-90247e6143d60fca69aa8d43755656a7.s3tc.ctex"]
+source_file="res://HumanShaders/Resources/Eye/eye_iris_nrm.png"
+dest_files=["res://.godot/imported/eye_iris_nrm.png-89a38387979ebab10476c25e74d2d80f.bptc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=false
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

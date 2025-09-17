@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf72xwb6rqlt"
-path.s3tc="res://.godot/imported/Infinite-Level_02_NRM_AO_4k.png-6049e6cd2ba311f81156e4e36a5b36ad.s3tc.ctex"
+uid="uid://bye2oqplgx3f7"
+path.s3tc="res://.godot/imported/eye_sclera_diff.png-c3249f0f4e4d40b08bc85f92808f387b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Models/HumanHead/Infinite_Scan_Ver0.1/Infinite-Level_02_NRM_AO_4k.png"
-dest_files=["res://.godot/imported/Infinite-Level_02_NRM_AO_4k.png-6049e6cd2ba311f81156e4e36a5b36ad.s3tc.ctex"]
+source_file="res://HumanShaders/Resources/Eye/eye_sclera_diff.png"
+dest_files=["res://.godot/imported/eye_sclera_diff.png-c3249f0f4e4d40b08bc85f92808f387b.s3tc.ctex"]
 
 [params]
 
@@ -22,7 +22,7 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=2
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcfgtc350v4n6"
-path.bptc="res://.godot/imported/eye_iris_nrm.png-327437b9c6f57c904b94ab74932a0a69.bptc.ctex"
+uid="uid://j0b7hx3dn2o8"
+path.s3tc="res://.godot/imported/Infinite-Level_02_AO3.png-c9ad55741ca8b75d7e0315d5160ebfe1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,23 +11,23 @@ metadata={
 
 [deps]
 
-source_file="res://Models/Eye/eye_iris_nrm.png"
-dest_files=["res://.godot/imported/eye_iris_nrm.png-327437b9c6f57c904b94ab74932a0a69.bptc.ctex"]
+source_file="res://Models/HumanHead/InfiniteScan/Images/Infinite-Level_02_AO3.png"
+dest_files=["res://.godot/imported/Infinite-Level_02_AO3.png-c9ad55741ca8b75d7e0315d5160ebfe1.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=true
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=2
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://Models/HumanHead/Infinite_Scan_Ver0.1/Images/Infinite-Level_02_AO3.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

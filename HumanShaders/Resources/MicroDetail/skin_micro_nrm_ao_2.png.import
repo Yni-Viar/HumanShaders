@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q081egd4y1v"
-path.s3tc="res://.godot/imported/skin_micro_nrm_ao.png-3b74b1be040ee7fcebff3615f3910259.s3tc.ctex"
+uid="uid://hgq8w6q7rehw"
+path.s3tc="res://.godot/imported/skin_micro_nrm_ao_2.png-d562f2e1ec4e1430bd180858ee515fa5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Resources/skin_micro_nrm_ao.png"
-dest_files=["res://.godot/imported/skin_micro_nrm_ao.png-3b74b1be040ee7fcebff3615f3910259.s3tc.ctex"]
+source_file="res://HumanShaders/Resources/MicroDetail/skin_micro_nrm_ao_2.png"
+dest_files=["res://.godot/imported/skin_micro_nrm_ao_2.png-d562f2e1ec4e1430bd180858ee515fa5.s3tc.ctex"]
 
 [params]
 
