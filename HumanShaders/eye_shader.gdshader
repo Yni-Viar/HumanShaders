@@ -1,3 +1,14 @@
+/*
+MIT License
+Copyright (c) 2025 MatMADNESS
+
+Permission is hereby granted, free of charge, to use, copy, modify, and
+distribute this software as permitted under the MIT License.
+
+This Skin Shader is part of the Human Shaders collection by MatMADNESS
+and is built upon https://github.com/RustyRoboticsBV/GodotStandardLightShader
+*/
+
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, sss_mode_skin;
 
@@ -19,8 +30,6 @@ uniform float metallic : hint_range(0.0, 1.0, 0.01);
 
 uniform sampler2D texture_heightmap : hint_default_black, filter_linear_mipmap, repeat_enable;
 uniform float heightmap_scale : hint_range(-128.0, 128.0, 0.1);
-uniform int heightmap_min_layers : hint_range(1, 64);
-uniform int heightmap_max_layers : hint_range(1, 64);
 uniform vec2 heightmap_flip;
 
 group_uniforms subsurface_scattering;
@@ -31,8 +40,6 @@ uniform sampler2D texture_sss_noise : filter_linear, repeat_enable, source_color
 
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
 
 varying vec3 albedo;
 varying vec3 DIFFUSE_NORMAL;

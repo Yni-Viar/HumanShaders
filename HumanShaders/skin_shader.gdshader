@@ -1,4 +1,13 @@
-// Realistic Skin Shader by MatMADNESS under MIT licence.
+/*
+MIT License
+Copyright (c) 2025 MatMADNESS
+
+Permission is hereby granted, free of charge, to use, copy, modify, and
+distribute this software as permitted under the MIT License.
+
+This Skin Shader is part of the Human Shaders collection by MatMADNESS
+and is built upon https://github.com/RustyRoboticsBV/GodotStandardLightShader
+*/
 
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, sss_mode_skin;
