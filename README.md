@@ -20,7 +20,7 @@ For now, the shaders available are:
 
 
 
-This is a work in progress and not actively maintained, don't expect frequent updates (or updates at all). Instead, use these shaders as base for your project, changing it to better suit your needs.
+This is a work in progress and not actively maintained, don't expect frequent updates (or updates at all). Instead, use these shaders as base for your project, changing them to better suit your needs.
 
 # Licensing
 
