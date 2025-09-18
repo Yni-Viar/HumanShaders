@@ -6,6 +6,8 @@ A set of shaders for Godot to create realistic humanoid characters
 
 This is the full project, including example models and a simple model visualizer. If you only care about the shaders, only download/clone the content from the "HumanShaders" folder.
 
+You can download a demo showcasing the shader capabilities on Itch.io: [Demo Page](https://matmadness.itch.io/godot-human-shaders) 
+
 
 For now, the shaders available are:
 
