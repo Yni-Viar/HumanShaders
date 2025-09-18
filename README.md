@@ -12,7 +12,6 @@ This is the full project, including example models and a simple model visualizer
 You can download a demo showcasing the shader capabilities on Itch.io: [Demo Page](https://matmadness.itch.io/godot-human-shaders) 
 
 
-
 For now, the shaders available are:
 
   - Skin shader
