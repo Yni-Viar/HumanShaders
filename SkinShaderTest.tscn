@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://bia04147fvbed" path="res://Resources/HDRI/reading_room_4k.hdr" id="1_xhaxv"]
 [ext_resource type="Script" uid="uid://b40e0c3m2d0ks" path="res://Scripts/Visualizer/auto_rotate.gd" id="2_jqh26"]
 [ext_resource type="Script" uid="uid://3fqhmlbfjxu8" path="res://Scripts/Visualizer/head_visuas.gd" id="4_6cvmo"]
-[ext_resource type="Material" uid="uid://c2cjfk5lo68rq" path="res://Models/HumanHead/EmilyHeadScan/Materials/mat_emilu_skin_standardmat.tres" id="5_5m3cl"]
 [ext_resource type="PackedScene" uid="uid://c1to4ajlo0oyl" path="res://Models/HumanHead/EmilyHeadScan/Emili_Head_Optimized.glb" id="5_kre5v"]
+[ext_resource type="Material" uid="uid://bcow8qj5qfkbh" path="res://Models/HumanHead/EmilyHeadScan/Materials/smat_emily_skin.tres" id="6_qfyww"]
 [ext_resource type="Material" uid="uid://bok8104w80smq" path="res://Models/HumanHead/InfiniteScan/Materials/smat_infinite_skin.tres" id="8_fw5fm"]
 [ext_resource type="PackedScene" uid="uid://bffxq2620bka5" path="res://Models/Monster/monster_1.glb" id="10_qfyww"]
 [ext_resource type="Script" uid="uid://2rlq2dosu6m1" path="res://Scripts/Visualizer/ui_main.gd" id="10_wtu8x"]
@@ -109,15 +109,10 @@ mesh = NodePath("Emili_Head_Optimized/Armature/Skeleton3D/Emily_Head")
 material_index = 1
 materials = Array[int]([0, 1])
 animation_player = NodePath("Emili_Head_Optimized/AnimationPlayer")
-standard_material_3d = ExtResource("5_5m3cl")
+standard_material_3d = ExtResource("6_qfyww")
 
 [node name="Emili_Head_Optimized" parent="SubViewportContainer/SubViewport/Head/HeadVisuals" instance=ExtResource("5_kre5v")]
 transform = Transform3D(0.0119473, 0.000345611, 0.00106945, -0.000346993, 0.011995, 2.4025e-11, -0.001069, -3.09241e-05, 0.0119523, -0.00207924, 0.122231, 0.0265137)
-
-[node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature" index="0"]
-bones/3/rotation = Quaternion(-0.08573442, 0.00095272803, -0.0027906022, 0.9963137)
-bones/4/rotation = Quaternion(0.69081104, 0.020946186, 0.013091629, 0.72261333)
-bones/5/rotation = Quaternion(0.6763242, 0.03359682, -0.083757296, 0.73105514)
 
 [node name="Emily_Face_Details" parent="SubViewportContainer/SubViewport/Head/HeadVisuals/Emili_Head_Optimized/Armature/Skeleton3D" index="0"]
 extra_cull_margin = 50.0

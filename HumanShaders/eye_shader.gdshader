@@ -5,7 +5,7 @@ Copyright (c) 2025 MatMADNESS
 Permission is hereby granted, free of charge, to use, copy, modify, and
 distribute this software as permitted under the MIT License.
 
-This Skin Shader is part of the Human Shaders collection by MatMADNESS
+This Shader is part of the Human Shaders collection by MatMADNESS
 and is built upon https://github.com/RustyRoboticsBV/GodotStandardLightShader
 */
 
