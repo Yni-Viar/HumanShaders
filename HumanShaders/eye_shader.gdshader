@@ -16,6 +16,7 @@ uniform vec4 sclera_albedo : source_color = vec4(1.);
 uniform vec4 iris_albedo : source_color = vec4(1.);
 uniform sampler2D sclera_albedo_texture : source_color, filter_linear_mipmap, repeat_enable;
 uniform sampler2D iris_albedo_texture : source_color, filter_linear_mipmap, repeat_enable;
+uniform bool height_enabled = true;
 
 group_uniforms normal;
 uniform sampler2D sclera_normal_texture : hint_roughness_normal, filter_linear_mipmap, repeat_enable;
@@ -65,14 +66,14 @@ void fragment() {
 	vec4 iris_depth = texture(texture_heightmap, iris_uv);
 	iris_alpha = smoothstep(0.0,0.2, 1.- iris_depth.b);
 
-	{
-		// Height: Enabled
-		vec3 view_dir = normalize(normalize(-VERTEX + EYE_OFFSET) * mat3(TANGENT * heightmap_flip.x, -BINORMAL * heightmap_flip.y, NORMAL));
-		float depth = 1.0 - iris_depth.b;
-		vec2 ofs = iris_uv - view_dir.xy / (view_dir.z * fresnel) * depth * heightmap_scale * 0.01;
-		iris_uv = clamp(ofs,0.,1.);
-		//ALBEDO = vec3(view_dir);
-	}
+#if CURRENT_RENDERER != RENDERER_COMPATIBILITY
+	// Height: Enabled
+	vec3 view_dir = normalize(normalize(-VERTEX + EYE_OFFSET) * mat3(TANGENT * heightmap_flip.x, -BINORMAL * heightmap_flip.y, NORMAL));
+	float depth = 1.0 - iris_depth.b;
+	vec2 ofs = iris_uv - view_dir.xy / (view_dir.z * fresnel) * depth * heightmap_scale * 0.01;
+	iris_uv = clamp(ofs,0.,1.);
+	//ALBEDO = vec3(view_dir);
+#endif
 
 	vec4 sclera_diff = texture(sclera_albedo_texture, base_uv) * sclera_albedo;
 	vec4 iris_diff = texture(iris_albedo_texture, (iris_uv - uv_center) * 1.0 + uv_center) * iris_albedo;
