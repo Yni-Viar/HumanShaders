@@ -29,8 +29,10 @@ uniform float roughness : hint_range(0.0, 1.0, 0.01) = 0.1;
 uniform float specular : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform float metallic : hint_range(0.0, 1.0, 0.01);
 
+group_uniforms height;
+uniform bool use_heightmap = true;
 uniform sampler2D texture_heightmap : hint_default_black, filter_linear_mipmap, repeat_enable;
-uniform float heightmap_scale : hint_range(-128.0, 128.0, 0.1);
+uniform float heightmap_scale : hint_range(0.0, 128.0, 0.1) = 32.0;
 uniform vec2 heightmap_flip;
 
 group_uniforms subsurface_scattering;
@@ -58,33 +60,36 @@ void fragment() {
 
 	//float depth_tex = texture(depth_texture, base_uv).r * .5;
 	float fresnel = clamp(dot(normalize(NORMAL), normalize(VIEW)), 0.0, 1.0 );
-	fresnel = pow(1.- fresnel,1.) +1.;
+	fresnel = clamp(pow(1.- fresnel + 0.32,7.), 0., 1.) +1.;
 
 	vec2 uv_center = vec2(0.5);
-	vec2 iris_uv = clamp(((UV - uv_center) * iris_scale + uv_center), 0., 1.);
+	vec2 iris_uv = clamp(((UV - uv_center) * iris_scale + uv_center), 0.0, 1.);
 	float iris_alpha = texture(iris_albedo_texture, iris_uv).a;
 	vec4 iris_depth = texture(texture_heightmap, iris_uv);
 	iris_alpha = smoothstep(0.0,0.2, 1.- iris_depth.b);
+	float iris_uv_size = 1.6;
 
+//Parallax effect. Only runs of not in compatibility renderer.
 #if CURRENT_RENDERER != RENDERER_COMPATIBILITY
-	// Height: Enabled
-	vec3 view_dir = normalize(normalize(-VERTEX + EYE_OFFSET) * mat3(TANGENT * heightmap_flip.x, -BINORMAL * heightmap_flip.y, NORMAL));
-	float depth = 1.0 - iris_depth.b;
-	vec2 ofs = iris_uv - view_dir.xy / (view_dir.z * fresnel) * depth * heightmap_scale * 0.01;
-	iris_uv = clamp(ofs,0.,1.);
-	//ALBEDO = vec3(view_dir);
+	if (use_heightmap) {
+		iris_uv_size /= (1. + heightmap_scale * 0.025);
+		vec3 view_dir = normalize(normalize(-VERTEX + EYE_OFFSET) * mat3(TANGENT * heightmap_flip.x, -BINORMAL * heightmap_flip.y, NORMAL));
+		float depth = 1.0 - iris_depth.b;
+		vec2 ofs = iris_uv - view_dir.xy / (view_dir.z * fresnel) * depth * heightmap_scale * 0.01;
+		iris_uv = clamp(ofs,0.,1.);
+	}
 #endif
 
+	iris_uv = (iris_uv - uv_center) * iris_uv_size + uv_center;
+
 	vec4 sclera_diff = texture(sclera_albedo_texture, base_uv) * sclera_albedo;
-	vec4 iris_diff = texture(iris_albedo_texture, (iris_uv - uv_center) * 1.0 + uv_center) * iris_albedo;
+	vec4 iris_diff = texture(iris_albedo_texture, iris_uv) * iris_albedo;
 
 	albedo = mix(sclera_diff, iris_diff, iris_alpha).rgb;
 
 	ALBEDO = albedo;
 
 	ROUGHNESS = roughness;
-	//NORMAL = mix(NORMAL, vec3(-NORMAL.xy,NORMAL.z), iris_alpha * 0.8);
-	//SPECULAR = 0.;
 
 	vec3 sclera_normal_tex = textureLod(sclera_normal_texture, base_uv, 4).rgb;
 	vec3 iris_normal_tex = textureLod(iris_normal_texture, iris_uv, 4).rgb;
@@ -105,8 +110,6 @@ void fragment() {
 
 	NORMAL_MAP = mix(sclera_normal_tex, vec3(.5,.5,1.), iris_alpha);
 	NORMAL_MAP_DEPTH = normal_strength;
-
-	//ALBEDO = iris_normal_mix;
 
 	//SSS
 	if (subsurface_scattering){
